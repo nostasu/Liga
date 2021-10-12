@@ -20761,51 +20761,8 @@ let data = {
         }
     ]
 }
+
 console.log(data);
 
-let tbody = document.getElementById("tbody");
-//Se añade la tabla entera a la etiqueta body
-let equipoLocal;
-let resultado;
-let equipoVisitante;
-let fecha;
-let finalizado;
-
-function crearTabla() {
-
-    for (let i = 0; i < data.matches.length; i++) {
-        let row = document.createElement("tr"); //Creo la fila
-        tbody.appendChild(row); // Decimos que la fila es hija del tbody.
-        equipoLocal = document.createElement("td");
-        resultado = document.createElement("td");
-        equipoVisitante = document.createElement("td");
-        fecha = document.createElement("td");
-        finalizado = document.createElement("td");
-        equipoLocal.innerHTML = data.matches[i].homeTeam.name;
-        resultado.innerHTML = `${data.matches[i].score.fullTime.homeTeam} - ${data.matches[i].score.fullTime.awayTeam}`;
-        equipoVisitante.innerHTML = data.matches[i].awayTeam.name;
-        fecha.innerHTML = data.matches[i].season.startDate;
-        finalizado.innerHTML = data.matches[i].status;
-
-        row.appendChild(equipoLocal);
-        row.appendChild(resultado);
-        row.appendChild(equipoVisitante);
-        row.appendChild(fecha);
-        row.appendChild(finalizado);
-    }
-}
-
-crearTabla();
-
-//Esto funciona, no borrar
-function mostrarEquipoLocal() {
-    for (let i = 0; i < data.matches.length; i++) {
-        let row = document.createElement("tr"); //Creo la fila
-        let equipoLocal = document.createElement("td");
-        tbody.appendChild(row);
-        equipoLocal.innerHTML = data.matches[i].homeTeam.name;
-        row.appendChild(equipoLocal);
-    }
-}
 
 
