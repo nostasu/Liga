@@ -12,7 +12,6 @@
 </head>
 
 <body>
-    <!--Barra de navegacion todas barras de navegacion de bootstrap empieza en navbar-->
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-custom-2">
             <div class="container-fluid justify-content-center">
@@ -41,17 +40,22 @@
                 </div>
             </div>
         </nav>
-
         <main>
-            <div class="main-container tablePartidos">
+            <div class="main-container tableClasificacion">
                 <table class="table table-striped table-hover">
                     <thead>
-                        <tr class="table-dark text-primary">
-                            <th>Equipo Local</th>
-                            <th colspan="3">Resultado</th>
-                            <th>Equipo Visitante</th>
-                            <th>Fecha</th>
-                            <th>Finalizado</th>
+                        <tr class="table-dark">
+                            <th>Posición</th>
+                            <th>Club</th>
+                            <th>PJ</th>
+                            <th>V</th>
+                            <th>E</th>
+                            <th>D</th>
+                            <th>GF</th>
+                            <th>GC</th>
+                            <th>DG</th>
+                            <th>Pts</th>
+
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -63,12 +67,12 @@
         </main>
     </div>
 
-    <script src="./datosPartidos.js"></script>
-    <script src="./funcionesPartidos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    <script src="./datosClasificacion.js"></script>
+    <script src="./funcionesClasificacion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-
 </body>
+
 
 </html>
