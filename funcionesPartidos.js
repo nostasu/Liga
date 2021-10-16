@@ -1,4 +1,4 @@
-let tbody = document.getElementById("tbody");
+let tbody = document.getElementById("tbodyP");
 //Se añade la tabla entera a la etiqueta body
 //quitar las variables globales.
 

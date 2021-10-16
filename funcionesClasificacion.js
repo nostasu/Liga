@@ -1,4 +1,5 @@
-console.log(dataClasificacion);
+
+let tbody = document.getElementById("tbodyC");
 
 function crearTablaClasificacion() {
     let row, posicion, equipo, PJ, V, E, D, GF, GC, DG, pts;
@@ -17,7 +18,7 @@ function crearTablaClasificacion() {
 
         //Equipo va a ser la suma de la imagen + el nombre.
         equipo = `<img src="${tablaC[i].team.crestUrl}"width="18px"/> ${tablaC[i].team.name}`;
-        PJ = tablaC[i].goalsFor;
+        PJ = tablaC[i].playedGames;
         V = tablaC[i].won;
         E = tablaC[i].draw;
         D = tablaC[i].lost;
@@ -34,4 +35,7 @@ function crearTablaClasificacion() {
         }
     }
 }
+
+
 crearTablaClasificacion();
+console.log(dataClasificacion);

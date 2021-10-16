@@ -1,33 +1,7 @@
-:root {
-    --bs-blue: #0d6efd;
-    --bs-indigo: #6610f2;
-    --bs-purple: #6f42c1;
-    --bs-pink: #d63384;
-    --bs-red: #dc3545;
-    --bs-orange: #fd7e14;
-    --bs-yellow: #ffc107;
-    --bs-green: #198754;
-    --bs-teal: #20c997;
-    --bs-cyan: #0dcaf0;
-    --bs-white: #fff;
-    --bs-gray: #6c757d;
-    --bs-gray-dark: #343a40;
-    --bs-primary: #0d6efd;
-    --bs-secondary: #6c757d;
-    --bs-success: #198754;
-    --bs-info: #0dcaf0;
-    --bs-warning: #ffc107;
-    --bs-danger: #dc3545;
-    --bs-light: #f8f9fa;
-    --bs-dark: #212529;
-    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+.navbar-toggler{
+    background-color:aliceblue;
 }
 
-.bg-custom-2{
-    background-image: linear-gradient(to right, rgba(15, 15, 15, 0), var(--bs-dark) 100%);
-}
 p{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -41,47 +15,61 @@ a{
     font-style: oblique;
 }
 
-#tbody tr{
-    height: 60px;
-    vertical-align: middle;
-}
 thead th:nth-child(2){
     text-align: center;
+} 
+
+.tablePartidos, thead{
+    text-align:center;
+    vertical-align: top;
 }
 
-.tablePartidos tbody td:nth-child(2), td:nth-child(3), td:nth-child(4){
-    background-color: #0dcaf0;
+
+#tbodyP tr td{
+
+    vertical-align: middle;
+} 
+
+button.accordion-button{
+    background-color: #A4C9FE;
+    text-align:center;
+    display: block;
     text-align: center;
-    padding:5px;
-    
 }
 
-
-#tbody tr td:nth-child(2){
+.accordion-body img{
+    max-width: 100px;
     text-align: center;
 }
 
-@media only screen and (max-width: 605px) {
-    .tablePartidos thead th:nth-child(4), th:nth-child(5){
-        display:none;
-    }    
-    
-    /* .tablePartidos tbody td:nth-child(6), td:nth-child(7){
-        display:none;  
-    } */
+@media screen and (max-width: 605px) {
 
     .container-fluid {
         width:100%;
         padding: 0;
     }
 
+    .tablePartidos thead th:nth-child(4), th:nth-child(5){
+        display:none;
+    }    
+
+    .tablePartidos tbody td:nth-child(6), td:nth-child(7){
+        display:none;  
+    } 
+
+
     .tableClasificacion thead th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),
     th:nth-child(7), th:nth-child(8), th:nth-child(9){
         display: none;
     }
-    .tableClasificacion tbody td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6),
-    td:nth-child(7), td:nth-child(8), td:nth-child(9){
+ 
+    .tableClasificacion tbody td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9), td:nth-child(10) {
+        
         display: none;
     }
 
+    .tableClasificacion tbody td:nth-child(4){
+        
+        display: none;
+    }
 }
