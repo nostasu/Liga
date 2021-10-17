@@ -8,8 +8,6 @@ let idLocal, idVisitante, nameLocal, nameVisitante, matches, avg;
 let arrayEquipos = [];
 let encontrado, posicion;
 
-
-
 function crearArray() {
 
     for (let i = 0; i < data.matches.length; i++) {
@@ -23,8 +21,10 @@ function crearArray() {
                 goalsLocal: data.matches[i].score.fullTime.homeTeam,
                 goalsVisitante: 0,
                 totalGoals: 0,
+                golesContraVisitante: 0,
                 matches: 1,
-                avg: 0
+                avg: 0,
+
             };
 
             let equipoVisitante = {
@@ -33,8 +33,10 @@ function crearArray() {
                 goalsLocal: 0,
                 goalsVisitante: data.matches[i].score.fullTime.awayTeam,
                 totalGoals: 0,
+                golesContraVisitante: data.matches[i].score.fullTime.homeTeam,
                 matches: 1,
-                avg: 0
+                avg: 0,
+
             };
 
             arrayEquipos.push(equipoLocal);
@@ -49,6 +51,7 @@ function crearArray() {
                     goalsLocal: data.matches[i].score.fullTime.homeTeam,
                     goalsVisitante: 0,
                     totalGoals: 0,
+                    golesContraVisitante: 0,
                     matches: 1,
                     avg: ""
                 };
@@ -74,9 +77,9 @@ function crearArray() {
                     goalsLocal: 0,
                     goalsVisitante: data.matches[i].score.fullTime.awayTeam,
                     totalGoals: 0,
+                    golesContraVisitante: data.matches[i].score.fullTime.homeTeam,
                     matches: 1,
-                    matches: 1,
-                    avg: 0
+                    avg: 0,
                 };
                 arrayEquipos.push(equipoVisitante);
             } else {
@@ -85,19 +88,13 @@ function crearArray() {
                 arrayEquipos[posicion].goalsVisitante = arrayEquipos[posicion].goalsVisitante + data.matches[i].score.fullTime.awayTeam;
                 if (data.matches[i].status == "FINISHED") {
                     arrayEquipos[posicion].matches = arrayEquipos[posicion].matches + 1;
+                    arrayEquipos[posicion].golesContraVisitante += + data.matches[i].score.fullTime.homeTeam;
                 }
             }
 
 
         }
 
-
-        // idVisitante = data.matches[i].awayTeam.id;
-        // nameLocal = data.matches[i].homeTeam.name;
-        // nameVisitante = data.matches[i].awayTeam.name;
-        // goalsLocal = data.matches[i].score.fullTime.homeTeam;
-        // goalsVisitante = data.matches[i].score.fullTime.awayTeam;
-        // //Sumar uno a los matches de cada equipo
     }
     modificarGolesAvg();
 }
@@ -107,6 +104,7 @@ function crearArray() {
 
 
 crearArray();
+console.log(arrayEquipos);
 
 
 
@@ -133,4 +131,60 @@ function modificarGolesAvg() {
     }
 }
 
-console.log(arrayEquipos);
+
+function ordenarAvg() {
+    ordenar();
+    //Los imprime ya ordenados por avg.
+    //Primero, probamos con un equipo a ver si funciona.
+    let card = document.getElementsByClassName("card-header");
+    let cards = [5];
+    let logo = document.getElementsByClassName("card-text");
+    let logos = [5];
+    let avgTotal = document.getElementsByClassName("card-title");
+    let textos = [5];
+
+
+
+    //Recorremos el array para sacar los datos que queremos
+
+    for (let i = 0; i < 5; i++) {
+        cards[i] = arrayEquipos[i].name;
+        card[i].innerHTML = cards[i];
+        let img = `<img src="https://crests.football-data.org/${arrayEquipos[i].id}.svg">`
+        logo[i].innerHTML = img;
+        textos[i] = `Con un total de ${arrayEquipos[i].totalGoals} goles en ${arrayEquipos[i].matches} partidos`;
+        avgTotal[i].innerHTML = textos[i];
+    }
+}
+
+ordenarAvg();
+//Ordenar arrayPorAvg. b siempre es el primer elemento que queremos comparar
+//primero Valencia, luego Getafe...
+function ordenar() {
+    arrayEquipos.sort((a, b) => {
+        if (a.avg < b.avg) {
+            return 1;
+        }
+
+        if (a.avg > b.avg) {
+            return -1;
+        }
+
+        return 0;
+    });
+}
+
+ordenarAvg();
+
+//Ordenar por menos goles en contra como visitante.
+function ordenarPorGolesContra() {
+    for (let i = 0; i < arrayEquipos.length - 1; i++) {
+        for (let j = 1; j < arrayEquipos.length; j++) {
+            //todavia no tengo goles en contra// if(arrayEquipos[i].)
+
+        }
+
+    }
+}
+
+
