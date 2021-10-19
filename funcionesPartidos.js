@@ -6,6 +6,7 @@ console.log(data);
 
 
 function crearTabla(data) {
+    document.getElementById("tbodyP").innerHTML = '';
     let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, row, fechaCompleta, imgLocal, imgVisitante;
 
     for (let i = 0; i < data.matches.length; i++) {

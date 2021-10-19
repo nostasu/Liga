@@ -4,136 +4,115 @@
 
 console.log(data.matches);
 //Tenemos que recorrer matches que es donde esta toda la info.
-let idLocal, idVisitante, nameLocal, nameVisitante, matches, avg;
-let arrayEquipos = [];
-let encontrado, posicion;
 
 function crearArray() {
+    let arrayEquipos = [];
 
     for (let i = 0; i < data.matches.length; i++) {
-        idLocal = data.matches[i].homeTeam.id;
-        idVisitante = data.matches[i].awayTeam.id;
+        let idLocal = data.matches[i].homeTeam.id;
+        let idVisitante = data.matches[i].awayTeam.id;
+        let status = data.matches[i].status;
+
         //Encontramos el primer equipo
-        if (arrayEquipos.length == 0) { //El array esta vacio. Incluir primer equipo
+        let equipo = comprobarSiExiste(arrayEquipos, idLocal, status);
+        if (equipo === undefined) {
             let equipoLocal = {
                 id: idLocal,
                 name: data.matches[i].homeTeam.name,
-                goalsLocal: data.matches[i].score.fullTime.homeTeam,
-                goalsVisitante: 0,
-                totalGoals: 0,
+                goals: data.matches[i].score.fullTime.homeTeam,
                 golesContraVisitante: 0,
                 matches: 1,
-                avg: 0,
-
+                avg: 0
             };
+            arrayEquipos.push(equipoLocal);
+        } else {
+            //Lo ha encontrado, tenemos que buscar su posicion en el Array para modificarlo.
+            // en comprobar si existe sacamos la posicion, por tanto:
 
+            if (equipo !== null) {
+                equipo.matches += 1;
+                equipo.goals += data.matches[i].score.fullTime.homeTeam;
+            }
+        }
+
+        let equipoV = comprobarSiExiste(arrayEquipos, idVisitante, status);
+        if (equipoV === undefined) {
             let equipoVisitante = {
-                id: data.matches[i].awayTeam.id,
+                id: idVisitante,
                 name: data.matches[i].awayTeam.name,
-                goalsLocal: 0,
-                goalsVisitante: data.matches[i].score.fullTime.awayTeam,
-                totalGoals: 0,
+                goals: data.matches[i].score.fullTime.awayTeam,
                 golesContraVisitante: data.matches[i].score.fullTime.homeTeam,
                 matches: 1,
                 avg: 0,
-
             };
-
-            arrayEquipos.push(equipoLocal);
             arrayEquipos.push(equipoVisitante);
-            //goalsLocal = data.matches[i].score.fullTime.homeTeam;
-        } else {  //El array no esta vacio, comprobar si el equipo ya esta
-            encontrado = comprobarSiExiste(idLocal);
-            if (encontrado == false) {
-                let equipoLocal = {
-                    id: idLocal,
-                    name: data.matches[i].homeTeam.name,
-                    goalsLocal: data.matches[i].score.fullTime.homeTeam,
-                    goalsVisitante: 0,
-                    totalGoals: 0,
-                    golesContraVisitante: 0,
-                    matches: 1,
-                    avg: ""
-                };
-                arrayEquipos.push(equipoLocal);
-            } else {
-                //Lo ha encontrado, tenemos que buscar su posicion en el Array para modificarlo.
-                // en comprobar si existe sacamos la posicion, por tanto:
+        } else {
+            //Lo ha encontrado, tenemos que buscar su posicion en el Array para modificarlo.
+            // en comprobar si existe sacamos la posicion, por tanto:
 
-                arrayEquipos[posicion].goalsLocal = arrayEquipos[posicion].goalsLocal + data.matches[i].score.fullTime.homeTeam;
-                //ahora actualizamos los matches solo si finished.
-                if (data.matches[i].status == "FINISHED") {
-                    arrayEquipos[posicion].matches = arrayEquipos[posicion].matches + 1;
-
-                }
-
+            if (equipoV !== null) {
+                equipoV.matches += 1;
+                equipoV.golesContraVisitante += data.matches[i].score.fullTime.homeTeam;
+                equipoV.goals += data.matches[i].score.fullTime.awayTeam;
             }
-
-            encontrado = comprobarSiExiste(idVisitante);
-            if (encontrado == false) {
-                let equipoVisitante = {
-                    id: idVisitante,
-                    name: data.matches[i].awayTeam.name,
-                    goalsLocal: 0,
-                    goalsVisitante: data.matches[i].score.fullTime.awayTeam,
-                    totalGoals: 0,
-                    golesContraVisitante: data.matches[i].score.fullTime.homeTeam,
-                    matches: 1,
-                    avg: 0,
-                };
-                arrayEquipos.push(equipoVisitante);
-            } else {
-                //Lo ha encontrado, tenemos que buscar su posicion en el Array para modificarlo.
-                // en comprobar si existe sacamos la posicion, por tanto:
-                arrayEquipos[posicion].goalsVisitante = arrayEquipos[posicion].goalsVisitante + data.matches[i].score.fullTime.awayTeam;
-                if (data.matches[i].status == "FINISHED") {
-                    arrayEquipos[posicion].matches = arrayEquipos[posicion].matches + 1;
-                    arrayEquipos[posicion].golesContraVisitante += + data.matches[i].score.fullTime.homeTeam;
-                }
-            }
-
-
         }
-
     }
-    modificarGolesAvg();
+
+    modificarGolesAvg(arrayEquipos);
+    crearTablaAvg(arrayEquipos);
+    crearTablaGolesContra(arrayEquipos);
+    console.log(arrayEquipos);
 }
 
-
-
-
+function modificarGolesAvg(arrayEquipos) {
+    for (let equipo of arrayEquipos) {
+        equipo.avg = (equipo.goals / equipo.matches).toFixed(2);
+    }
+}
 
 crearArray();
-console.log(arrayEquipos);
 
 
 
-function comprobarSiExiste(idB) {
-    for (let j = 0; j < arrayEquipos.length; j++) {
-        let id = arrayEquipos[j].id;
-        if (id == idB) {
-            encontrado = true;
-            posicion = j;
-            return encontrado;
+//Find. Si existe, pasar el objeto.
+// Si no existe, devolver para crearlo.
+function comprobarSiExiste(array, id, status) {
+
+    let equipo = array.find(equipo => equipo.id === id);
+
+    if (equipo !== undefined) {
+        if (status == "FINISHED") {
+            return equipo;
         } else {
-            encontrado = false;
+            return null;
         }
     }
 
-    return encontrado;
+    return equipo;
 }
 
-function modificarGolesAvg() {
+//Ordenar arrayPorAvg. b siempre es el primer elemento que queremos comparar
+//primero Valencia, luego Getafe...
+function ordenar(array, param) {
 
-    for (let equipo of arrayEquipos) {
-        equipo.totalGoals = equipo.goalsLocal + equipo.goalsVisitante;
-        equipo.avg = equipo.totalGoals / equipo.matches;
-    }
+    array.sort((a, b) => {
+        if (a[param] < b[param]) {
+            return 1;  //Es cuando lo queremos cambiar.
+        }
+
+        if (a[param] > b[param]) {
+            return -1;  //Lo dejamos igual.
+        }
+
+        return 0;
+    });
 }
 
+function crearTablaAvg(array) {
+    let arrayAvg = Array.from(array);
+    let param = "avg";
 
-function ordenarAvg() {
-    ordenar();
+    ordenar(arrayAvg, param);
     //Los imprime ya ordenados por avg.
     //Primero, probamos con un equipo a ver si funciona.
     let card = document.getElementsByClassName("card-header");
@@ -143,48 +122,44 @@ function ordenarAvg() {
     let avgTotal = document.getElementsByClassName("card-title");
     let textos = [5];
 
-
-
     //Recorremos el array para sacar los datos que queremos
 
     for (let i = 0; i < 5; i++) {
-        cards[i] = arrayEquipos[i].name;
-        card[i].innerHTML = cards[i];
-        let img = `<img src="https://crests.football-data.org/${arrayEquipos[i].id}.svg">`
+        cards[i] = arrayAvg[i].name;
+        card[i].innerHTML = `${i + 1}. ${cards[i]}`;
+        let img = `<img src="https://crests.football-data.org/${arrayAvg[i].id}.svg">`
         logo[i].innerHTML = img;
-        textos[i] = `Con un total de ${arrayEquipos[i].totalGoals} goles en ${arrayEquipos[i].matches} partidos`;
+        textos[i] = `Con un AVG de ${arrayAvg[i].avg} goles`;
         avgTotal[i].innerHTML = textos[i];
     }
 }
 
-ordenarAvg();
-//Ordenar arrayPorAvg. b siempre es el primer elemento que queremos comparar
-//primero Valencia, luego Getafe...
-function ordenar() {
-    arrayEquipos.sort((a, b) => {
-        if (a.avg < b.avg) {
-            return 1;
-        }
+function crearTablaGolesContra(array) {
+    let arrayGoles = Array.from(array);
+    let param = "golesContraVisitante";
 
-        if (a.avg > b.avg) {
-            return -1;
-        }
+    ordenar(arrayGoles, param);
+    arrayGoles.reverse();
+    //Los imprime ya ordenados por avg.
+    //Primero, probamos con un equipo a ver si funciona.
+    let card = document.getElementsByClassName("goles-header");
+    let cards = [5];
+    let logo = document.getElementsByClassName("body-text");
+    let logos = [5];
+    let avgTotal = document.getElementsByClassName("body-title");
+    let textos = [5];
 
-        return 0;
-    });
-}
+    //Recorremos el array para sacar los datos que queremos
 
-ordenarAvg();
-
-//Ordenar por menos goles en contra como visitante.
-function ordenarPorGolesContra() {
-    for (let i = 0; i < arrayEquipos.length - 1; i++) {
-        for (let j = 1; j < arrayEquipos.length; j++) {
-            //todavia no tengo goles en contra// if(arrayEquipos[i].)
-
-        }
-
+    for (let i = 0; i < 5; i++) {
+        cards[i] = arrayGoles[i].name;
+        card[i].innerHTML = `${i + 1}. ${cards[i]}`;
+        let img = `<img src="https://crests.football-data.org/${arrayGoles[i].id}.svg">`
+        logo[i].innerHTML = img;
+        textos[i] = `Con un total de ${arrayGoles[i].golesContraVisitante} goles en contra fuera de casa`;
+        avgTotal[i].innerHTML = textos[i];
     }
+
 }
 
 

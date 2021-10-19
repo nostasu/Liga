@@ -10,6 +10,13 @@ img{
     max-width:30px;
 }
 
+h1{
+
+    margin: 15px;
+    font: 25px'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: oblique;
+
+}
 a{
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-style: oblique;
@@ -30,6 +37,15 @@ thead th:nth-child(2){
     vertical-align: middle;
 } 
 
+.tableClasificacion th:nth-child(2), tr td:nth-child(2){
+    vertical-align: middle;
+    text-align: left;
+}
+
+.tableClasificacion tr td:last-child{
+    font-weight: bolder;
+}
+
 button.accordion-button{
     background-color: #A4C9FE;
     text-align:center;
@@ -37,11 +53,19 @@ button.accordion-button{
     text-align: center;
 }
 
-.accordion-body img{
+.accordion-body img, .card img{
     max-width: 100px;
     text-align: center;
 }
 
+.cards{
+    display:flex;
+}
+
+.card-header{
+    background-color: #e7f1ff;
+    color: #0c63e4;
+}
 @media screen and (max-width: 605px) {
 
     .container-fluid {
@@ -71,5 +95,11 @@ button.accordion-button{
     .tableClasificacion tbody td:nth-child(4){
         
         display: none;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    .cards{
+        flex-direction: column;
     }
 }
