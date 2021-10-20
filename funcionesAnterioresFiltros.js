@@ -1,7 +1,10 @@
 console.log(data);
 let boton = document.getElementById("buton");
+let reiniciar = document.getElementById("reiniciar");
+let cambioEquipo = document.getElementById("elegirEquipo");
 
 
+//Se crea un array solo con los nommbres de los equipos para imprimirlos.
 function crearArrayPequeño(data) {
     let nombresEquipos = [];
     for (let i = 0; i < data.matches.length; i++) {
@@ -33,10 +36,28 @@ function crearOpcionesSelect(nombresEquipos) {
     }
 }
 
+
+
 boton.addEventListener("click", function () {
     let marcado = document.getElementById("checked");
 
     let opcion;
+
+    let elementosSelect = document.getElementById("elegirEquipo");
+
+    let indiceSeleccionado = elementosSelect.selectedIndex;
+    let equipoSeleccionado = elementosSelect[indiceSeleccionado].text;
+
+    mostrarAlerta(data, opcion, equipoSeleccionado);
+
+    if (equipoSeleccionado == undefined) {
+        let alerta = document.getElementById("alerta");
+        document.getElementById("alerta").classList.remove("d-none");
+        alerta.innerHTML = `¡Debe seleccionar un equipo!`;
+    } else {
+        let op = document.getElementById("consultarOpcion").classList.remove("d-none");
+
+    }
 
     var opciones = document.getElementsByName("exampleRadios");
 
@@ -46,13 +67,11 @@ boton.addEventListener("click", function () {
         }
     }
 
-    let elementosSelect = document.getElementById("elegirEquipo");
 
-    let indiceSeleccionado = elementosSelect.selectedIndex;
-    let equipoSeleccionado = elementosSelect[indiceSeleccionado].text;
     crearArrayPorEquipo(equipoSeleccionado, opcion);
     //console.log(equipoSeleccionado);  //Funciona!
 });
+
 
 
 function crearArrayPorEquipo(equipoSeleccionado, opcion) {
@@ -78,6 +97,8 @@ function crearArrayPorEquipo(equipoSeleccionado, opcion) {
     filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado);
 
     console.log(filtrado);
+    document.getElementById("tbodyP").innerHTML = ''; //Borramos todo lo que esta en la pagina web4    
+    mostrarAlerta(filtrado, opcion, equipoSeleccionado);
     crearTabla(equipo);
 }
 
@@ -94,6 +115,7 @@ function filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSelec
                 if (opcion == "empatado") {
                     if (arrayEquipoSeleccionado[i].score.winner == "DRAW") {
                         filtrado.push(arrayEquipoSeleccionado[i]);
+
                     }
                 } else if (opcion == "ganado") {
                     if (equipoSeleccionado == arrayEquipoSeleccionado[i].homeTeam.name) {
@@ -118,7 +140,31 @@ function filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSelec
                 }
             }
         }
+    }
+}
+
+
+function mostrarAlerta(array, opcion, equipoSeleccionado) {
+
+    if (array.length == 0) {
+        let alerta = document.getElementById("alerta");
+        document.getElementById("alerta").classList.remove("d-none");
+        alerta.innerHTML = `No se han encontrado partidos para el equipo ${equipoSeleccionado} con el filtro ${opcion}`;
+    }
+
+    else {
+        let alerta = document.getElementById("alerta");
+        document.getElementById("alerta").classList.add("d-none");
 
     }
-    console.log(filtrado);
+
+}
+
+
+
+
+
+function funcion_reiniciar() {
+    document.getElementById("tbodyP").innerHTML = '';
+    crearTabla(data);
 }
