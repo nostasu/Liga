@@ -81,6 +81,8 @@ function eliminarNull(cadena) {
 
 //Se crea un array solo con los nommbres de los equipos para imprimirlos.
 function crearArrayPequeño(data) {
+
+
     let nombresEquipos = [];
     for (let i = 0; i < data.matches.length; i++) {
         let name = data.matches[i].awayTeam.name;
