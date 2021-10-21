@@ -27,15 +27,29 @@ boton.addEventListener("click", function () {
     crearArrayPorEquipo(equipoSeleccionado, opcion);
 });
 
-//Con data es data.matches.length
-//Si le paso el de filtado, es solo array.length
-
+//Funcion para crear la tabla dependiendo del array que le pasemos.
 function crearTabla(data) {
-    let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, row, fechaCompleta, imgLocal, imgVisitante;
-
+    let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, fechaCompleta, imgLocal, imgVisitante, jornada;
+    console.log(data);
     for (let i = 0; i < data.length; i++) {
-        row = document.createElement("tr"); //Creo la fila
-        tbody.appendChild(row); // Decimos que la fila es hija del tbody.
+        let row1 = document.createElement("tr"); //Creo la fila
+        tbody.appendChild(row1); // Decimos que la fila es hija del tbody.
+        //Para escribir el tr de jornadas.
+        if (i == 0) {  //con i = 0 imprimimos jornada 1
+            // jornada = 1;
+            let celdaJornada = document.createElement("td");
+            celdaJornada.setAttribute("colspan", "7");
+            celdaJornada.innerHTML = `Jornada ${data[i].matchday}`
+            row1.append(celdaJornada);
+        } else if (data[i].matchday != data[i - 1].matchday) { //Si la jornada es distinta de 1... comprobamos cuando cambia
+            let celdaJornada = document.createElement("td");
+            celdaJornada.setAttribute("colspan", "7");
+            celdaJornada.innerHTML = `Jornada ${data[i].matchday}`
+            row1.append(celdaJornada);
+        }
+
+        let row2 = document.createElement("tr");
+        tbody.appendChild(row2);
         equipoLocal = document.createElement("td");
         equipoLocal.textContent = data[i].homeTeam.name;
         resultado = document.createElement("td");
@@ -55,10 +69,10 @@ function crearTabla(data) {
         fecha.innerHTML = fechaCompleta.substring(0, 10);
         finalizado = document.createElement("td");
         finalizado.innerHTML = cambiarFinalizado(data[i].status);
-
-        row.append(equipoLocal, imgLocal, resultado, imgVisitante, equipoVisitante, fecha, finalizado);
+        row2.append(equipoLocal, imgLocal, resultado, imgVisitante, equipoVisitante, fecha, finalizado);
     }
 }
+
 
 function cambiarFinalizado(valor) {
 
@@ -81,7 +95,6 @@ function eliminarNull(cadena) {
 }
 
 //Aqui empiezan los filtros
-
 //Se crea un array solo con los nommbres de los equipos para imprimirlos.
 function crearArrayPequeño(data) {
 
@@ -138,7 +151,7 @@ function crearArrayPorEquipo(equipoSeleccionado, opcion) {
     //ya tenemos el array solo del equipo. Ahora la opcion que haya indicado: 
     //finalizados [ganado, perdido, empatado] o bien proximos.
     console.log(arrayEquipoSeleccionado);
-    filtrado = filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado);
+    filtrado = filtros(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado);
     //Añadimos filtado al objeto.
     console.log(filtrado);
     document.getElementById("tbodyP").innerHTML = ''; //Borramos todo lo que esta en la pagina web4    
@@ -147,7 +160,7 @@ function crearArrayPorEquipo(equipoSeleccionado, opcion) {
 
 }
 
-function filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado) {
+function filtros(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado) {
     if (opcion == "proximos") {
         filtrado = arrayEquipoSeleccionado.filter(partido => partido.status != "FINISHED");
     } else {
@@ -217,5 +230,5 @@ function mostrarAlerta(array, opcion, equipoSeleccionado, arrayEquipoSeleccionad
 
 function funcion_reiniciar() {
     document.getElementById("tbodyP").innerHTML = '';
-    crearTabla(data);
+    crearTabla(data.matches);
 }
