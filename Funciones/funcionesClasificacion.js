@@ -1,4 +1,3 @@
-
 let tbody = document.getElementById("tbodyC");
 
 function crearTablaClasificacion() {
@@ -6,12 +5,10 @@ function crearTablaClasificacion() {
     let arrayCol;
     let tablaC = dataClasificacion.standings[0].table;
 
-
     for (let i = 0; i < tablaC.length; i++) {
 
         row = document.createElement("tr");
         tbody.appendChild(row); // Decimos que la fila es hija del tbody.
-
 
         //definimos variables.
         posicion = tablaC[i].position;
@@ -28,6 +25,8 @@ function crearTablaClasificacion() {
         pts = tablaC[i].points;
         arrayCol = [posicion, equipo, PJ, V, E, D, GF, GC, DG, pts];
 
+        //Iteramos sobre el arrayCol para obtener todas las celdas necesarias.
+        // Por cada posicion del vector, este genera una celda.
         for (let j = 0; j < arrayCol.length; j++) {
             let pos = document.createElement("td");
             pos.innerHTML = arrayCol[j];
@@ -35,7 +34,6 @@ function crearTablaClasificacion() {
         }
     }
 }
-
 
 crearTablaClasificacion();
 console.log(dataClasificacion);

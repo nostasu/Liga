@@ -2,8 +2,8 @@
 //Tenemos que conseguir hacer un array de estadisticas:
 // est = [0]{ id, name, goals, matches, avg}
 
-console.log(data.matches);
 //Tenemos que recorrer matches que es donde esta toda la info.
+crearArray();
 
 function crearArray() {
     let arrayEquipos = [];
@@ -70,9 +70,6 @@ function modificarGolesAvg(arrayEquipos) {
     }
 }
 
-crearArray();
-
-
 
 //Find. Si existe, pasar el objeto.
 // Si no existe, devolver para crearlo.
@@ -87,7 +84,6 @@ function comprobarSiExiste(array, id, status) {
             return null;
         }
     }
-
     return equipo;
 }
 
@@ -149,6 +145,8 @@ function crearTablaGolesContra(array) {
     let avgTotal = document.getElementsByClassName("body-title");
     let textos = [5];
 
+
+
     //Recorremos el array para sacar los datos que queremos
 
     for (let i = 0; i < 5; i++) {
@@ -159,7 +157,6 @@ function crearTablaGolesContra(array) {
         textos[i] = `Con un total de ${arrayGoles[i].golesContraVisitante} goles en contra fuera de casa`;
         avgTotal[i].innerHTML = textos[i];
     }
-
 }
 
 

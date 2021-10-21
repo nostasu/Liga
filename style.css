@@ -66,6 +66,13 @@ button.accordion-button{
     background-color: #e7f1ff;
     color: #0c63e4;
 }
+
+td[colspan^="7"]{
+    background-color: #A4C9FE;
+    font-style: oblique;
+    font-size: 1.25em;
+} 
+
 @media screen and (max-width: 605px) {
 
     .container-fluid {

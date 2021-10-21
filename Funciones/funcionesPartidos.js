@@ -4,7 +4,6 @@ let reiniciar = document.getElementById("reiniciar");
 let cambioEquipo = document.getElementById("elegirEquipo");
 //Se añade la tabla entera a la etiqueta body
 
-console.log(data);
 crearTabla(data.matches); //Crea el array de todos los partidos sin filtrar.
 crearArrayPequeño(data.matches);
 
@@ -29,8 +28,7 @@ boton.addEventListener("click", function () {
 
 //Funcion para crear la tabla dependiendo del array que le pasemos.
 function crearTabla(data) {
-    let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, fechaCompleta, imgLocal, imgVisitante, jornada;
-    console.log(data);
+    let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, fechaCompleta, imgLocal, imgVisitante;
     for (let i = 0; i < data.length; i++) {
         let row1 = document.createElement("tr"); //Creo la fila
         tbody.appendChild(row1); // Decimos que la fila es hija del tbody.
@@ -69,11 +67,18 @@ function crearTabla(data) {
         fecha.innerHTML = fechaCompleta.substring(0, 10);
         finalizado = document.createElement("td");
         finalizado.innerHTML = cambiarFinalizado(data[i].status);
+
+        if (data[i].score.fullTime.homeTeam > data[i].score.fullTime.awayTeam) {
+            equipoLocal.setAttribute("style", "font-weight:bold");
+        }
+        else if (data[i].score.fullTime.awayTeam > data[i].score.fullTime.homeTeam) {
+            equipoVisitante.setAttribute("style", "font-weight:bold");
+        }
         row2.append(equipoLocal, imgLocal, resultado, imgVisitante, equipoVisitante, fecha, finalizado);
     }
 }
 
-
+//para modificar el finished, SCHEDULED, etc
 function cambiarFinalizado(valor) {
 
     switch (valor) {
@@ -115,10 +120,10 @@ function crearArrayPequeño(data) {
     nombresEquipos = Array.from(nombresEquipos); //convertimos el set en Array
     //Tambien quiero que se ordenen por nombre.
     nombresEquipos.sort();
-    console.log(nombresEquipos);
     crearOpcionesSelect(nombresEquipos);
 }
 
+//Nos crea los select para los equipos.
 function crearOpcionesSelect(nombresEquipos) {
     let select = document.getElementById("elegirEquipo");
 
@@ -134,10 +139,12 @@ function crearOpcionesSelect(nombresEquipos) {
     }
 }
 
+//ESTA ES LA FUNCION PPAL DE LOS FILTROS.
+//esta funcion llama a la funcion filtros, a mostrar alerta y a creartabla y conjuntamente 
+//con todas esas, se elabora la tabla de acuerdo al filtro escogido.
 function crearArrayPorEquipo(equipoSeleccionado, opcion) {
     //opcion = ganado, perdido, empatado.
     let filtrado = [];
-    //Lo meto en un objeto para que asi pueda reutilizar el código de crearTabla.
 
     //Recorremos el array para sacar TODOS los partidos del equipo.
     let arrayEquipoSeleccionado = data.matches.filter(partido => {
@@ -150,16 +157,16 @@ function crearArrayPorEquipo(equipoSeleccionado, opcion) {
     console.log(arrayEquipoSeleccionado);
     //ya tenemos el array solo del equipo. Ahora la opcion que haya indicado: 
     //finalizados [ganado, perdido, empatado] o bien proximos.
-    console.log(arrayEquipoSeleccionado);
     filtrado = filtros(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado);
-    //Añadimos filtado al objeto.
-    console.log(filtrado);
+    //Añadimos filtrado al objeto.
     document.getElementById("tbodyP").innerHTML = ''; //Borramos todo lo que esta en la pagina web4    
     crearTabla(filtrado);
     mostrarAlerta(filtrado, opcion, equipoSeleccionado, arrayEquipoSeleccionado);
 
 }
 
+//Esta funcion es llamada por la funcion anterior y filtra el arrayEquipo seleccionado con la opcion escogida.
+//Vuelve a devolver el array.
 function filtros(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado) {
     if (opcion == "proximos") {
         filtrado = arrayEquipoSeleccionado.filter(partido => partido.status != "FINISHED");
@@ -199,11 +206,9 @@ function mostrarAlerta(array, opcion, equipoSeleccionado, arrayEquipoSeleccionad
     document.getElementById("alerta").classList.remove("d-none");
 
     if (equipoSeleccionado == "Selecciona el equipo") {
-
         alerta.innerHTML = `¡Debe seleccionar un equipo!`;
         if (opcion != undefined) {
             var opciones = document.getElementsByName("exampleRadios");
-
             for (var i = 0; i < opciones.length; i++) {
                 if (opciones[i].checked == true) {
                     opciones[i].checked = false;
@@ -212,12 +217,11 @@ function mostrarAlerta(array, opcion, equipoSeleccionado, arrayEquipoSeleccionad
                 }
             }
         }
-
-    } else if (equipoSeleccionado != undefined) {
+    } else if (equipoSeleccionado != undefined) { //barcelona seleccionado
         //Tengo un equipo 
-        if (opcion == undefined) {
+        if (opcion == undefined) { // no tenemos ninguna opcion escogida (ganado, perdido)
             //Mostramos todos los partidos del equipo y return 0 para que salga.
-            document.getElementById("alerta").classList.add("d-none");
+            document.getElementById("alerta").classList.add("d-none"); //elimino mensaje
             crearTabla(arrayEquipoSeleccionado);
         }
         if (array.length == 0) {
