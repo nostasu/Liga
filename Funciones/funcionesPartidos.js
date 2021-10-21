@@ -5,8 +5,8 @@ let cambioEquipo = document.getElementById("elegirEquipo");
 //Se añade la tabla entera a la etiqueta body
 
 console.log(data);
-crearTabla(data);
-crearArrayPequeño(data);
+crearTabla(data.matches); //Crea el array de todos los partidos sin filtrar.
+crearArrayPequeño(data.matches);
 
 boton.addEventListener("click", function () {
 
@@ -27,31 +27,34 @@ boton.addEventListener("click", function () {
     crearArrayPorEquipo(equipoSeleccionado, opcion);
 });
 
+//Con data es data.matches.length
+//Si le paso el de filtado, es solo array.length
+
 function crearTabla(data) {
     let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, row, fechaCompleta, imgLocal, imgVisitante;
 
-    for (let i = 0; i < data.matches.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         row = document.createElement("tr"); //Creo la fila
         tbody.appendChild(row); // Decimos que la fila es hija del tbody.
         equipoLocal = document.createElement("td");
-        equipoLocal.textContent = data.matches[i].homeTeam.name;
+        equipoLocal.textContent = data[i].homeTeam.name;
         resultado = document.createElement("td");
-        resultadoProvisional = eliminarNull(`${data.matches[i].score.fullTime.homeTeam} - ${data.matches[i].score.fullTime.awayTeam}`);
+        resultadoProvisional = eliminarNull(`${data[i].score.fullTime.homeTeam} - ${data[i].score.fullTime.awayTeam}`);
         //hemos eliminado el null- pero a pesar de todo queremos agregar la imagen del equipo igual.
         //Equipo + resultado prov + equipo (necesitamos sacar la id)
         //resultado.innerHTML = `<img src="https://crests.football-data.org/${data.matches[i].homeTeam.id}.svg"/> ${resultadoProvisional} <img src="https://crests.football-data.org/${data.matches[i].awayTeam.id}.svg"/>`;
         imgLocal = document.createElement("td");
         imgVisitante = document.createElement("td");
-        imgLocal.innerHTML = `<img src="https://crests.football-data.org/${data.matches[i].homeTeam.id}.svg"/>`
+        imgLocal.innerHTML = `<img src="https://crests.football-data.org/${data[i].homeTeam.id}.svg"/>`
         resultado.innerHTML = resultadoProvisional;
-        imgVisitante.innerHTML = `<img src="https://crests.football-data.org/${data.matches[i].awayTeam.id}.svg"/>`
+        imgVisitante.innerHTML = `<img src="https://crests.football-data.org/${data[i].awayTeam.id}.svg"/>`
         equipoVisitante = document.createElement("td");
-        equipoVisitante.innerHTML = data.matches[i].awayTeam.name;
+        equipoVisitante.innerHTML = data[i].awayTeam.name;
         fecha = document.createElement("td");
-        fechaCompleta = data.matches[i].utcDate;
+        fechaCompleta = data[i].utcDate;
         fecha.innerHTML = fechaCompleta.substring(0, 10);
         finalizado = document.createElement("td");
-        finalizado.innerHTML = cambiarFinalizado(data.matches[i].status);
+        finalizado.innerHTML = cambiarFinalizado(data[i].status);
 
         row.append(equipoLocal, imgLocal, resultado, imgVisitante, equipoVisitante, fecha, finalizado);
     }
@@ -82,15 +85,21 @@ function eliminarNull(cadena) {
 //Se crea un array solo con los nommbres de los equipos para imprimirlos.
 function crearArrayPequeño(data) {
 
+    // let nombresEquipos = [];
+    // for (let i = 0; i < data.length; i++) {
+    //     let name = data[i].awayTeam.name;
+    //     if (!nombresEquipos.includes(name)) {
+    //         nombresEquipos.push(name);
+    //     }
+    // }
 
-    let nombresEquipos = [];
-    for (let i = 0; i < data.matches.length; i++) {
-        let name = data.matches[i].awayTeam.name;
-        if (!nombresEquipos.includes(name)) {
-            nombresEquipos.push(name);
-        }
-    }
+    let nombres = data.map(partido => {
+        return partido.homeTeam.name;
+    });
+    //Asi me devuelve los 380 nombres del awayTeam.
 
+    let nombresEquipos = new Set(nombres);
+    nombresEquipos = Array.from(nombresEquipos); //convertimos el set en Array
     //Tambien quiero que se ordenen por nombre.
     nombresEquipos.sort();
     console.log(nombresEquipos);
@@ -105,7 +114,7 @@ function crearOpcionesSelect(nombresEquipos) {
         let nombreEquipo = nombresEquipos[i];
         option.setAttribute("value", "nombreEquipo");
 
-        let optionTexto = document.createTextNode(nombreEquipo); //Aqui tengo que meter el id de la tabla
+        let optionTexto = document.createTextNode(nombreEquipo);
         option.appendChild(optionTexto);
 
         select.appendChild(option);
@@ -115,11 +124,7 @@ function crearOpcionesSelect(nombresEquipos) {
 function crearArrayPorEquipo(equipoSeleccionado, opcion) {
     //opcion = ganado, perdido, empatado.
     let filtrado = [];
-
     //Lo meto en un objeto para que asi pueda reutilizar el código de crearTabla.
-    let equipo = {
-        matches: filtrado
-    }
 
     //Recorremos el array para sacar TODOS los partidos del equipo.
     let arrayEquipoSeleccionado = data.matches.filter(partido => {
@@ -129,20 +134,18 @@ function crearArrayPorEquipo(equipoSeleccionado, opcion) {
             return partido;
         }
     });
-
+    console.log(arrayEquipoSeleccionado);
     //ya tenemos el array solo del equipo. Ahora la opcion que haya indicado: 
     //finalizados [ganado, perdido, empatado] o bien proximos.
     console.log(arrayEquipoSeleccionado);
     filtrado = filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado);
     //Añadimos filtado al objeto.
     console.log(filtrado);
-    equipo.matches = filtrado;
     document.getElementById("tbodyP").innerHTML = ''; //Borramos todo lo que esta en la pagina web4    
-    crearTabla(equipo);
+    crearTabla(filtrado);
     mostrarAlerta(filtrado, opcion, equipoSeleccionado, arrayEquipoSeleccionado);
 
 }
-
 
 function filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado) {
     if (opcion == "proximos") {
@@ -155,7 +158,6 @@ function filtrarPorOpcion(arrayEquipoSeleccionado, opcion, filtrado, equipoSelec
             case "empatado":
                 filtrado = finalizados.filter(partido => partido.score.winner == "DRAW");
                 break;
-
             case "ganado":
                 filtrado = finalizados.filter(partido => {
                     if ((equipoSeleccionado == partido.homeTeam.name && partido.score.winner == "HOME_TEAM") ||
@@ -202,12 +204,8 @@ function mostrarAlerta(array, opcion, equipoSeleccionado, arrayEquipoSeleccionad
         //Tengo un equipo 
         if (opcion == undefined) {
             //Mostramos todos los partidos del equipo y return 0 para que salga.
-            let equipo = {
-                matches: arrayEquipoSeleccionado
-            }
             document.getElementById("alerta").classList.add("d-none");
-            equipo.matches = arrayEquipoSeleccionado;
-            crearTabla(equipo);
+            crearTabla(arrayEquipoSeleccionado);
         }
         if (array.length == 0) {
             alerta.innerHTML = `No se han encontrado partidos para el equipo ${equipoSeleccionado} con el filtro ${opcion}`;
