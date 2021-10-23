@@ -71,6 +71,7 @@ td[colspan^="7"]{
     background-color: #A4C9FE;
     font-style: oblique;
     font-size: 1.25em;
+    padding: 10px 20px;
 } 
 
 .containerSpinner{
@@ -88,7 +89,7 @@ td[colspan^="7"]{
 
 @media screen and (max-width: 605px) {
 
-    .container-fluid {
+    .container {
         width:100%;
         padding: 0;
     }
@@ -115,6 +116,13 @@ td[colspan^="7"]{
     .tableClasificacion tbody td:nth-child(4){
         
         display: none;
+    }
+    .d-flex{
+        flex-wrap: wrap;
+    }
+
+    #reiniciar{
+        margin-top: 10px;
     }
 }
 
