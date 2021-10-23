@@ -1,9 +1,9 @@
 let api = "cfba544d51b440e59acb0d0eb9572159";
-let urlImagenes = "https://api.football-data.org/v2/competitions/2014/teams";
+let urlClasificacion = "https://api.football-data.org/v2/competitions/2014/standings";
 
 //El fetch necesita un input que es la informacion (url) + init que es 
 //un objeto de opciones, donde vamos a poner nuestro header (API KEY)
-fetch(urlImagenes, {
+fetch(urlClasificacion, {
     method: "GET",
     headers: {
         "X-Auth-Token": api
@@ -11,25 +11,24 @@ fetch(urlImagenes, {
 })
     .then(function (response) {
         if (response.ok) { //si es true se mete.
-            console.log(response);
             return response.json();  //esto nos devuelve otra promesa, hay que hacer otro then
-
         }
+
         throw newError("Fallo");
     })
 
-    .then(function (dataImagenes) {
-        console.log(dataImagenes); //Aqui ya nos da los partidos!!
-        init(dataImagenes);
+    .then(function (dataClasificacion) {
+
+        init(dataClasificacion);
     })
     .catch(function (error) {
         console.error(error);
         //AQui podemos poner codigo bootstrap para errores.
     });
 
-function init(dataImagenes) {
+function init(dataClasificacion) {
     document.getElementById('spinner').style.display = 'none';
-    document.getElementById("containerHome").classList.remove("d-none");
-    crearSlider(dataImagenes);
+    document.getElementById("containerClasficacion").classList.remove("d-none");
+    crearTablaClasificacion(dataClasificacion.standings[0].table);
 }
 

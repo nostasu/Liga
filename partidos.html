@@ -8,7 +8,9 @@
     <title>Liga</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" type="image/jpg" href="./favicon.png">
 </head>
 
 <body>
@@ -44,80 +46,81 @@
                 </div>
             </div>
         </nav>
+        <div class="d-none" id="containerPartidos">
+            <form class="form-group" onsubmit="return false" id="filtros">
+                <div class="container mt-4">
+                    <div class="container mt-4 mb-4 d-flex flex-row justify-content-around">
+                        <select name="select" id="elegirEquipo">
+                            <option value="value1" selected>Selecciona el equipo</option>
+                        </select>
+                        <button type="submit" id="buton" class="btn btn-primary">Submit</button>
+                        <input type="reset" id="reiniciar" value="Reiniciar" class="btn btn-primary">
 
-        <form class="form-group" onsubmit="return false" id="filtros">
-            <div class="container mt-4">
-                <div class="container mt-4 mb-4 d-flex flex-row justify-content-around">
-                    <select name="select" id="elegirEquipo">
-                        <option value="value1" selected>Selecciona el equipo</option>
-                    </select>
-                    <button type="submit" id="buton" class="btn btn-primary">Submit</button>
-                    <input type="reset" id="reiniciar" value="Reiniciar" class="btn btn-primary"
-                        onClick="funcion_reiniciar();">
-
-                </div>
-
-                <div class="d-flex flex-row justify-content-around" id="consultarOpcion">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="ganado">
-                        <label class="form-check-label">
-                            Ganado
-                        </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="perdido">
-                        <label class="form-check-label">
-                            Perdido
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="empatado">
-                        <label class="form-check-label">
-                            Empatado
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="proximos">
-                        <label class="form-check-label">
-                            Proximos partidos
-                        </label>
-                    </div>
-                </div>
-            </div>
 
-
-            </div>
-
-            <div class="container mt-4">
-                <div class=" main-container tablePartidos">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr class="table-dark">
-                                <th>Equipo Local</th>
-                                <th colspan="3">Resultado</th>
-                                <th>Equipo Visitante</th>
-                                <th>Fecha</th>
-                                <th>Finalizado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodyP">
-
-
-                        </tbody>
-                        <!--Meter dentro con el appendchild-->
-                    </table>
-
-                    <div class="alert alert-warning d-none" id="alerta" role="alert">
-                        This is a warning alert—check it out!
+                    <div class="d-flex flex-row justify-content-around" id="consultarOpcion">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="ganado">
+                            <label class="form-check-label">
+                                Ganado
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="perdido">
+                            <label class="form-check-label">
+                                Perdido
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="empatado">
+                            <label class="form-check-label">
+                                Empatado
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="proximos">
+                            <label class="form-check-label">
+                                Proximos partidos
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+
+                <div class="container mt-4">
+                    <div class=" main-container tablePartidos">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="table-dark">
+                                    <th>Equipo Local</th>
+                                    <th colspan="3">Resultado</th>
+                                    <th>Equipo Visitante</th>
+                                    <th>Fecha</th>
+                                    <th>Finalizado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyP">
+
+
+                            </tbody>
+                            <!--Meter dentro con el appendchild-->
+                        </table>
+
+                        <div class="alert alert-warning d-none" id="alerta" role="alert">
+                            This is a warning alert—check it out!
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="containerSpinner">
+            <div class="spinner-border text-danger" role="status" id="spinner"></div>
+        </div>
     </main>
 
 
-    <script src="./datosJson/datosPartidos.js"></script>
+
     <script src="./Funciones/funcionesPartidos.js"></script>
+    <script src="./datosJson/partidosJson.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

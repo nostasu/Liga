@@ -3,23 +3,22 @@
 // est = [0]{ id, name, goals, matches, avg}
 
 //Tenemos que recorrer matches que es donde esta toda la info.
-crearArray();
 
-function crearArray() {
+function crearArray(datosPartidos) {
     let arrayEquipos = [];
 
-    for (let i = 0; i < data.matches.length; i++) {
-        let idLocal = data.matches[i].homeTeam.id;
-        let idVisitante = data.matches[i].awayTeam.id;
-        let status = data.matches[i].status;
+    for (let i = 0; i < datosPartidos.length; i++) {
+        let idLocal = datosPartidos[i].homeTeam.id;
+        let idVisitante = datosPartidos[i].awayTeam.id;
+        let status = datosPartidos[i].status;
 
         //Encontramos el primer equipo
         let equipo = comprobarSiExiste(arrayEquipos, idLocal, status);
         if (equipo === undefined) {
             let equipoLocal = {
                 id: idLocal,
-                name: data.matches[i].homeTeam.name,
-                goals: data.matches[i].score.fullTime.homeTeam,
+                name: datosPartidos[i].homeTeam.name,
+                goals: datosPartidos[i].score.fullTime.homeTeam,
                 golesContraVisitante: 0,
                 matches: 1,
                 avg: 0
@@ -31,7 +30,7 @@ function crearArray() {
 
             if (equipo !== null) {
                 equipo.matches += 1;
-                equipo.goals += data.matches[i].score.fullTime.homeTeam;
+                equipo.goals += datosPartidos[i].score.fullTime.homeTeam;
             }
         }
 
@@ -39,9 +38,9 @@ function crearArray() {
         if (equipoV === undefined) {
             let equipoVisitante = {
                 id: idVisitante,
-                name: data.matches[i].awayTeam.name,
-                goals: data.matches[i].score.fullTime.awayTeam,
-                golesContraVisitante: data.matches[i].score.fullTime.homeTeam,
+                name: datosPartidos[i].awayTeam.name,
+                goals: datosPartidos[i].score.fullTime.awayTeam,
+                golesContraVisitante: datosPartidos[i].score.fullTime.homeTeam,
                 matches: 1,
                 avg: 0,
             };
@@ -52,8 +51,8 @@ function crearArray() {
 
             if (equipoV !== null) {
                 equipoV.matches += 1;
-                equipoV.golesContraVisitante += data.matches[i].score.fullTime.homeTeam;
-                equipoV.goals += data.matches[i].score.fullTime.awayTeam;
+                equipoV.golesContraVisitante += datosPartidos[i].score.fullTime.homeTeam;
+                equipoV.goals += datosPartidos[i].score.fullTime.awayTeam;
             }
         }
     }
@@ -158,5 +157,3 @@ function crearTablaGolesContra(array) {
         avgTotal[i].innerHTML = textos[i];
     }
 }
-
-

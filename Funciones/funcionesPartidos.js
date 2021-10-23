@@ -1,14 +1,9 @@
 let tbody = document.getElementById("tbodyP");
-let boton = document.getElementById("buton");
 let reiniciar = document.getElementById("reiniciar");
 let cambioEquipo = document.getElementById("elegirEquipo");
 //Se añade la tabla entera a la etiqueta body
 
-crearTabla(data.matches); //Crea el array de todos los partidos sin filtrar.
-crearArrayPequeño(data.matches);
-
-boton.addEventListener("click", function () {
-
+function activarBoton(data) {
     let elementosSelect = document.getElementById("elegirEquipo");
     let indiceSeleccionado = elementosSelect.selectedIndex;  //seleccionamos el index
     let equipoSeleccionado = elementosSelect[indiceSeleccionado].text; //obtenemos el texto.
@@ -22,9 +17,9 @@ boton.addEventListener("click", function () {
             opcion = opciones[i].id;  //el que este marcado, sera la opcion escogida.
         }
     }
+    crearArrayPorEquipo(equipoSeleccionado, opcion, data);
 
-    crearArrayPorEquipo(equipoSeleccionado, opcion);
-});
+}
 
 //Funcion para crear la tabla dependiendo del array que le pasemos.
 function crearTabla(data) {
@@ -88,6 +83,10 @@ function cambiarFinalizado(valor) {
             return "aplazado";
         case "SCHEDULED":
             return "programado";
+        case "PAUSED":
+            return "descanso";
+        case "IN_PLAY":
+            return "en juego";
     }
 }
 
@@ -142,19 +141,17 @@ function crearOpcionesSelect(nombresEquipos) {
 //ESTA ES LA FUNCION PPAL DE LOS FILTROS.
 //esta funcion llama a la funcion filtros, a mostrar alerta y a creartabla y conjuntamente 
 //con todas esas, se elabora la tabla de acuerdo al filtro escogido.
-function crearArrayPorEquipo(equipoSeleccionado, opcion) {
+function crearArrayPorEquipo(equipoSeleccionado, opcion, data) {
     //opcion = ganado, perdido, empatado.
     let filtrado = [];
-
     //Recorremos el array para sacar TODOS los partidos del equipo.
-    let arrayEquipoSeleccionado = data.matches.filter(partido => {
+    let arrayEquipoSeleccionado = data.filter(partido => {
         if (partido.awayTeam.name == equipoSeleccionado) {
             return partido;
         } else if (partido.homeTeam.name == equipoSeleccionado) {
             return partido;
         }
     });
-    console.log(arrayEquipoSeleccionado);
     //ya tenemos el array solo del equipo. Ahora la opcion que haya indicado: 
     //finalizados [ganado, perdido, empatado] o bien proximos.
     filtrado = filtros(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado);
@@ -164,7 +161,6 @@ function crearArrayPorEquipo(equipoSeleccionado, opcion) {
     mostrarAlerta(filtrado, opcion, equipoSeleccionado, arrayEquipoSeleccionado);
 
 }
-
 //Esta funcion es llamada por la funcion anterior y filtra el arrayEquipo seleccionado con la opcion escogida.
 //Vuelve a devolver el array.
 function filtros(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado) {
@@ -230,9 +226,4 @@ function mostrarAlerta(array, opcion, equipoSeleccionado, arrayEquipoSeleccionad
             document.getElementById("alerta").classList.add("d-none");
         }
     }
-}
-
-function funcion_reiniciar() {
-    document.getElementById("tbodyP").innerHTML = '';
-    crearTabla(data.matches);
 }
