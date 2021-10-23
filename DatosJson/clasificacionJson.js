@@ -27,7 +27,7 @@ fetch(urlClasificacion, {
     });
 
 function init(dataClasificacion) {
-    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('containerSpinner').style.display = 'none';
     document.getElementById("containerClasficacion").classList.remove("d-none");
     crearTablaClasificacion(dataClasificacion.standings[0].table);
 }

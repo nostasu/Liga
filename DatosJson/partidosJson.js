@@ -19,14 +19,13 @@ fetch(urlPartidos, {
 
     .then(function (dataPartidos) {
         console.log(dataPartidos); //Aqui ya nos da los partidos!!
-        document.getElementById("buton").addEventListener("click", activarBoton(dataPartidos.matches));
         init(dataPartidos);
 
     })
 
 
 function init(dataPartidos) {
-    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('containerSpinner').style.display = 'none';
     document.getElementById("containerPartidos").classList.remove("d-none");
     crearArrayPequeño(dataPartidos.matches);
     crearTabla(dataPartidos.matches); //Crea el array de todos los partidos sin filtrar.

@@ -28,10 +28,9 @@ fetch(urlPartidos, {
     });
 
 function init(dataPartidos) {
-    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('containerSpinner').style.display = 'none';
     document.getElementById("containerEstadisticas").classList.remove("d-none");
     crearArray(dataPartidos.matches);
-    activarBoton(dataPartidos);
 }
 
 
