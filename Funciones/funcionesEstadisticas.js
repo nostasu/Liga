@@ -1,8 +1,7 @@
-//cogemos los datos de partidos. En partidos se llama data.
 //Tenemos que conseguir hacer un array de estadisticas:
 // est = [0]{ id, name, goals, matches, avg}
 
-//Tenemos que recorrer matches que es donde esta toda la info.
+//Tenemos que recorrer datosPartidos que es donde esta toda la info.
 
 function crearArray(datosPartidos) {
     let arrayEquipos = [];
@@ -63,6 +62,7 @@ function crearArray(datosPartidos) {
     console.log(arrayEquipos);
 }
 
+//Lo único que hace es sacar la media del avg
 function modificarGolesAvg(arrayEquipos) {
     for (let equipo of arrayEquipos) {
         equipo.avg = (equipo.goals / equipo.matches).toFixed(2);
@@ -86,7 +86,7 @@ function comprobarSiExiste(array, id, status) {
     return equipo;
 }
 
-//Ordenar arrayPorAvg. b siempre es el primer elemento que queremos comparar
+//Ordenar segun parametro (o bien avg, o bien goles/Contra). b siempre es el primer elemento que queremos comparar
 //primero Valencia, luego Getafe...
 function ordenar(array, param) {
 
@@ -103,57 +103,57 @@ function ordenar(array, param) {
     });
 }
 
-function crearTablaAvg(array) {
-    let arrayAvg = Array.from(array);
-    let param = "avg";
+// function crearTablaAvg(array) {
+//     let arrayAvg = Array.from(array);
+//     let param = "avg";
 
-    ordenar(arrayAvg, param);
-    //Los imprime ya ordenados por avg.
-    //Primero, probamos con un equipo a ver si funciona.
-    let card = document.getElementsByClassName("card-header");
-    let cards = [5];
-    let logo = document.getElementsByClassName("card-text");
-    let logos = [5];
-    let avgTotal = document.getElementsByClassName("card-title");
-    let textos = [5];
+//     ordenar(arrayAvg, param);
+//     //Los imprime ya ordenados por avg.
+//     //Primero, probamos con un equipo a ver si funciona.
+//     let card = document.getElementsByClassName("card-header");
+//     let cards = [5];
+//     let logo = document.getElementsByClassName("card-text");
+//     let logos = [5];
+//     let avgTotal = document.getElementsByClassName("card-title");
+//     let textos = [5];
 
-    //Recorremos el array para sacar los datos que queremos
+//     //Recorremos el array para sacar los datos que queremos
 
-    for (let i = 0; i < 5; i++) {
-        cards[i] = arrayAvg[i].name;
-        card[i].innerHTML = `${i + 1}. ${cards[i]}`;
-        let img = `<img src="https://crests.football-data.org/${arrayAvg[i].id}.svg">`
-        logo[i].innerHTML = img;
-        textos[i] = `Con un AVG de ${arrayAvg[i].avg} goles`;
-        avgTotal[i].innerHTML = textos[i];
-    }
-}
+//     for (let i = 0; i < 5; i++) {
+//         cards[i] = arrayAvg[i].name;
+//         card[i].innerHTML = `${i + 1}. ${cards[i]}`;
+//         let img = `<img src="https://crests.football-data.org/${arrayAvg[i].id}.svg">`
+//         logo[i].innerHTML = img;
+//         textos[i] = `Con un AVG de ${arrayAvg[i].avg} goles`;
+//         avgTotal[i].innerHTML = textos[i];
+//     }
+// }
 
-function crearTablaGolesContra(array) {
-    let arrayGoles = Array.from(array);
-    let param = "golesContraVisitante";
+// function crearTablaGolesContra(array) {
+//     let arrayGoles = Array.from(array);
+//     let param = "golesContraVisitante";
 
-    ordenar(arrayGoles, param);
-    arrayGoles.reverse();
-    //Los imprime ya ordenados por avg.
-    //Primero, probamos con un equipo a ver si funciona.
-    let card = document.getElementsByClassName("goles-header");
-    let cards = [5];
-    let logo = document.getElementsByClassName("body-text");
-    let logos = [5];
-    let avgTotal = document.getElementsByClassName("body-title");
-    let textos = [5];
+//     ordenar(arrayGoles, param);
+//     arrayGoles.reverse();
+//     //Los imprime ya ordenados por avg.
+//     //Primero, probamos con un equipo a ver si funciona.
+//     let card = document.getElementsByClassName("goles-header");
+//     let cards = [5];
+//     let logo = document.getElementsByClassName("body-text");
+//     let logos = [5];
+//     let avgTotal = document.getElementsByClassName("body-title");
+//     let textos = [5];
 
 
 
-    //Recorremos el array para sacar los datos que queremos
+//     //Recorremos el array para sacar los datos que queremos
 
-    for (let i = 0; i < 5; i++) {
-        cards[i] = arrayGoles[i].name;
-        card[i].innerHTML = `${i + 1}. ${cards[i]}`;
-        let img = `<img src="https://crests.football-data.org/${arrayGoles[i].id}.svg">`
-        logo[i].innerHTML = img;
-        textos[i] = `Con un total de ${arrayGoles[i].golesContraVisitante} goles en contra fuera de casa`;
-        avgTotal[i].innerHTML = textos[i];
-    }
-}
+//     for (let i = 0; i < 5; i++) {
+//         cards[i] = arrayGoles[i].name;
+//         card[i].innerHTML = `${i + 1}. ${cards[i]}`;
+//         let img = `<img src="https://crests.football-data.org/${arrayGoles[i].id}.svg">`
+//         logo[i].innerHTML = img;
+//         textos[i] = `Con un total de ${arrayGoles[i].golesContraVisitante} goles en contra fuera de casa`;
+//         avgTotal[i].innerHTML = textos[i];
+//     }
+// }

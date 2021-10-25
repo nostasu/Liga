@@ -30,6 +30,6 @@ fetch(urlImagenes, {
 function init(dataImagenes) {
     document.getElementById('containerSpinner').style.display = 'none';
     document.getElementById("containerHome").classList.remove("d-none");
-    crearSlider(dataImagenes);
+    crearSlider(dataImagenes.teams);
 }
 

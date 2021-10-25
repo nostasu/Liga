@@ -23,9 +23,11 @@ function crearTablaClasificacion(datosClasificacion) {
         DG = datosClasificacion[i].goalDifference;
         pts = datosClasificacion[i].points;
         arrayCol = [posicion, equipo, PJ, V, E, D, GF, GC, DG, pts];
+        //Almacenamos todos los datos en ArrayCol
 
         //Iteramos sobre el arrayCol para obtener todas las celdas necesarias.
-        // Por cada posicion del vector, este genera una celda.
+        // Por cada posicion del vector, este genera una celda
+        //como en cada posicion de arrayCol[] tenemos los datos de la fila, creamos la td y la anexamos.
         for (let j = 0; j < arrayCol.length; j++) {
             let pos = document.createElement("td");
             pos.innerHTML = arrayCol[j];
