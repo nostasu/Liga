@@ -1,5 +1,5 @@
 //Tenemos que conseguir hacer un array de estadisticas:
-// est = [0]{ id, name, goals, matches, avg}
+// est = [0]{ id, name, goals, matches, avg, golesContra}
 
 //Tenemos que recorrer datosPartidos que es donde esta toda la info.
 
@@ -11,8 +11,8 @@ function crearArray(datosPartidos) {
         let idVisitante = datosPartidos[i].awayTeam.id;
         let status = datosPartidos[i].status;
 
-        //Encontramos el primer equipo
         let equipo = comprobarSiExiste(arrayEquipos, idLocal, status);
+        //El equipo todavia no esta en el array, lo creamos.
         if (equipo === undefined) {
             let equipoLocal = {
                 id: idLocal,
@@ -24,9 +24,7 @@ function crearArray(datosPartidos) {
             };
             arrayEquipos.push(equipoLocal);
         } else {
-            //Lo ha encontrado, tenemos que buscar su posicion en el Array para modificarlo.
-            // en comprobar si existe sacamos la posicion, por tanto:
-
+            //Lo ha encontrado, y nos devuelve el equipo.
             if (equipo !== null) {
                 equipo.matches += 1;
                 equipo.goals += datosPartidos[i].score.fullTime.homeTeam;
@@ -45,9 +43,7 @@ function crearArray(datosPartidos) {
             };
             arrayEquipos.push(equipoVisitante);
         } else {
-            //Lo ha encontrado, tenemos que buscar su posicion en el Array para modificarlo.
-            // en comprobar si existe sacamos la posicion, por tanto:
-
+            //Lo ha encontrado, por tanto modificamos sus valores.
             if (equipoV !== null) {
                 equipoV.matches += 1;
                 equipoV.golesContraVisitante += datosPartidos[i].score.fullTime.homeTeam;
@@ -55,11 +51,9 @@ function crearArray(datosPartidos) {
             }
         }
     }
-
     modificarGolesAvg(arrayEquipos);
-    crearTablaAvg(arrayEquipos);
-    crearTablaGolesContra(arrayEquipos);
-    console.log(arrayEquipos);
+    crearCards(arrayEquipos, "avg");
+    crearCards(arrayEquipos, "golesContra");
 }
 
 //Lo único que hace es sacar la media del avg
@@ -69,8 +63,9 @@ function modificarGolesAvg(arrayEquipos) {
     }
 }
 
-
-//Find. Si existe, pasar el objeto.
+//Find. Si el partido no esta finalizado, ni lo miramos (no hay que actualizar
+//ni el valor de matches, ni el de goles).
+//Si existe y esta finalizado., pasar el objeto.
 // Si no existe, devolver para crearlo.
 function comprobarSiExiste(array, id, status) {
 
@@ -86,6 +81,60 @@ function comprobarSiExiste(array, id, status) {
     return equipo;
 }
 
+//funcion para crear las cards, hacemos copia del array, lo ordenamos,
+//y creamos las tarjetas dinamicamente.
+function crearCards(array, param) {
+    let arrayParam = Array.from(array);
+    ordenar(arrayParam, param);
+
+    if (param == "golesContra") {
+        arrayParam.reverse();
+    }
+
+    let array5 = arrayParam.slice(0, 5);
+    let contenedorCards = document.getElementById("containerEstadisticas");
+    let titulo = document.createElement("h1");
+    contenedorCards.appendChild(titulo);
+
+    if (param == "avg") {
+        titulo.innerHTML = "Equipos con mejor media de goles por partido";
+    } else if (param == "golesContra") {
+        titulo.innerHTML = "Equipos con menos goles en contra fuera de casa";
+    }
+
+    let fila = document.createElement("div");
+    fila.classList.add("row");
+    contenedorCards.appendChild(fila);
+    let cards = document.createElement("div");
+    cards.classList.add("cards");
+    fila.appendChild(cards);
+
+    for (let i = 0; i < array5.length; i++) {
+        let card = document.createElement("div");
+        card.classList.add("card");
+        card.classList.add("col-lg");
+        cards.appendChild(card);
+        let header = document.createElement("div");
+        header.classList.add("card-header");
+        header.innerHTML = `${i + 1}. ${array5[i].name}`;
+        let body = document.createElement("div");
+        body.classList.add("card-body");
+        let logo = document.createElement("img");
+        logo.classList.add("card-title");
+        logo.src = `https://crests.football-data.org/${array5[i].id}.svg`;
+        let texto = document.createElement("p");
+        texto.classList.add("card-text");
+        if (param == "avg") {
+            texto.innerHTML = `Con un AVG de ${array5[i].avg} goles`;
+        } else if (param == "golesContra") {
+            texto.innerHTML = `Con un total de ${array5[i].golesContraVisitante} goles en contra fuera de casa`;
+        }
+
+        card.append(header, body);
+        body.append(logo, texto);
+    }
+}
+
 //Ordenar segun parametro (o bien avg, o bien goles/Contra). b siempre es el primer elemento que queremos comparar
 //primero Valencia, luego Getafe...
 function ordenar(array, param) {
@@ -94,66 +143,9 @@ function ordenar(array, param) {
         if (a[param] < b[param]) {
             return 1;  //Es cuando lo queremos cambiar.
         }
-
         if (a[param] > b[param]) {
             return -1;  //Lo dejamos igual.
         }
-
         return 0;
     });
 }
-
-// function crearTablaAvg(array) {
-//     let arrayAvg = Array.from(array);
-//     let param = "avg";
-
-//     ordenar(arrayAvg, param);
-//     //Los imprime ya ordenados por avg.
-//     //Primero, probamos con un equipo a ver si funciona.
-//     let card = document.getElementsByClassName("card-header");
-//     let cards = [5];
-//     let logo = document.getElementsByClassName("card-text");
-//     let logos = [5];
-//     let avgTotal = document.getElementsByClassName("card-title");
-//     let textos = [5];
-
-//     //Recorremos el array para sacar los datos que queremos
-
-//     for (let i = 0; i < 5; i++) {
-//         cards[i] = arrayAvg[i].name;
-//         card[i].innerHTML = `${i + 1}. ${cards[i]}`;
-//         let img = `<img src="https://crests.football-data.org/${arrayAvg[i].id}.svg">`
-//         logo[i].innerHTML = img;
-//         textos[i] = `Con un AVG de ${arrayAvg[i].avg} goles`;
-//         avgTotal[i].innerHTML = textos[i];
-//     }
-// }
-
-// function crearTablaGolesContra(array) {
-//     let arrayGoles = Array.from(array);
-//     let param = "golesContraVisitante";
-
-//     ordenar(arrayGoles, param);
-//     arrayGoles.reverse();
-//     //Los imprime ya ordenados por avg.
-//     //Primero, probamos con un equipo a ver si funciona.
-//     let card = document.getElementsByClassName("goles-header");
-//     let cards = [5];
-//     let logo = document.getElementsByClassName("body-text");
-//     let logos = [5];
-//     let avgTotal = document.getElementsByClassName("body-title");
-//     let textos = [5];
-
-
-
-//     //Recorremos el array para sacar los datos que queremos
-
-//     for (let i = 0; i < 5; i++) {
-//         cards[i] = arrayGoles[i].name;
-//         card[i].innerHTML = `${i + 1}. ${cards[i]}`;
-//         let img = `<img src="https://crests.football-data.org/${arrayGoles[i].id}.svg">`
-//         logo[i].innerHTML = img;
-//         textos[i] = `Con un total de ${arrayGoles[i].golesContraVisitante} goles en contra fuera de casa`;
-//         avgTotal[i].innerHTML = textos[i];
-//     }
-// }

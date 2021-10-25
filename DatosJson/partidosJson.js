@@ -23,7 +23,6 @@ fetch(urlPartidos, {
 
     })
 
-
 function init(dataPartidos) {
     document.getElementById('containerSpinner').style.display = 'none';
     document.getElementById("containerPartidos").classList.remove("d-none");

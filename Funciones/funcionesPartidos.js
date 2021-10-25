@@ -1,27 +1,28 @@
 let tbody = document.getElementById("tbodyP");
-let reiniciar = document.getElementById("reiniciar");
-let cambioEquipo = document.getElementById("elegirEquipo");
 //Se añade la tabla entera a la etiqueta body
 
+//A esta funcion le llama el addEventListener y es para poder pulsar submit
+// para seleccionar por equipo y modalidad (ganados, perdidos..).
 function activarBoton(data) {
     let elementosSelect = document.getElementById("elegirEquipo");
-    let indiceSeleccionado = elementosSelect.selectedIndex;  //seleccionamos el index
+    let indiceSeleccionado = elementosSelect.selectedIndex;  //seleccionamos el index del que este marcado
     let equipoSeleccionado = elementosSelect[indiceSeleccionado].text; //obtenemos el texto.
 
     let opcion;
     var opciones = document.getElementsByName("exampleRadios");
     //obtiene los elementos, los devuelve en un "array"
-
+    //con el for sacamos la opcion que esta marcada.
     for (var i = 0; i < opciones.length; i++) {
         if (opciones[i].checked == true) {
             opcion = opciones[i].id;  //el que este marcado, sera la opcion escogida.
-        }
+        }  //la id es "ganados, perdidos..."
     }
     crearArrayPorEquipo(equipoSeleccionado, opcion, data);
 
 }
 
 //Funcion para crear la tabla dependiendo del array que le pasemos.
+//Le pasamos el array de todos los partidos o bien el array filtrado.
 function crearTabla(data) {
     let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, fechaCompleta, imgLocal, imgVisitante;
     for (let i = 0; i < data.length; i++) {
@@ -102,20 +103,12 @@ function eliminarNull(cadena) {
 //Se crea un array solo con los nommbres de los equipos para imprimirlos.
 function crearArrayPequeño(data) {
 
-    // let nombresEquipos = [];
-    // for (let i = 0; i < data.length; i++) {
-    //     let name = data[i].awayTeam.name;
-    //     if (!nombresEquipos.includes(name)) {
-    //         nombresEquipos.push(name);
-    //     }
-    // }
-
     let nombres = data.map(partido => {
         return partido.homeTeam.name;
     });
     //Asi me devuelve los 380 nombres del awayTeam.
 
-    let nombresEquipos = new Set(nombres);
+    let nombresEquipos = new Set(nombres);  //el set para recoger los valores "unicos"
     nombresEquipos = Array.from(nombresEquipos); //convertimos el set en Array
     //Tambien quiero que se ordenen por nombre.
     nombresEquipos.sort();
@@ -130,10 +123,8 @@ function crearOpcionesSelect(nombresEquipos) {
         let option = document.createElement("option");
         let nombreEquipo = nombresEquipos[i];
         option.setAttribute("value", "nombreEquipo");
-
         let optionTexto = document.createTextNode(nombreEquipo);
         option.appendChild(optionTexto);
-
         select.appendChild(option);
     }
 }
@@ -144,7 +135,7 @@ function crearOpcionesSelect(nombresEquipos) {
 function crearArrayPorEquipo(equipoSeleccionado, opcion, data) {
     //opcion = ganado, perdido, empatado.
     let filtrado = [];
-    //Recorremos el array para sacar TODOS los partidos del equipo.
+    //Recorremos el array para sacar TODOS los partidos del equipo. Los que ha jugado como visitante y como local.
     let arrayEquipoSeleccionado = data.filter(partido => {
         if (partido.awayTeam.name == equipoSeleccionado) {
             return partido;
@@ -156,7 +147,7 @@ function crearArrayPorEquipo(equipoSeleccionado, opcion, data) {
     //finalizados [ganado, perdido, empatado] o bien proximos.
     filtrado = filtros(arrayEquipoSeleccionado, opcion, filtrado, equipoSeleccionado);
     //Añadimos filtrado al objeto.
-    document.getElementById("tbodyP").innerHTML = ''; //Borramos todo lo que esta en la pagina web4    
+    document.getElementById("tbodyP").innerHTML = ''; //Borramos todo lo que esta en la pagina web.   
     crearTabla(filtrado);
     mostrarAlerta(filtrado, opcion, equipoSeleccionado, arrayEquipoSeleccionado);
 
