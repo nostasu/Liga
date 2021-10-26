@@ -56,35 +56,41 @@
                         <select name="select" id="elegirEquipo">
                             <option value="value1" selected>Selecciona el equipo</option>
                         </select>
-                        <button type="submit" id="buton" class="btn btn-primary">Enviar</button>
-                        <input type="reset" id="reiniciar" value="Reiniciar" class="btn btn-primary">
-
+                        <div class="submitReset">
+                            <button type="submit" id="buton" class="btn btn-primary">Enviar</button>
+                            <input type="reset" id="reiniciar" value="Reiniciar" class="btn btn-primary">
+                        </div>
                     </div>
 
                     <div class="d-flex flex-row justify-content-around" id="consultarOpcion">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="ganado">
-                            <label class="form-check-label">
-                                Ganado
-                            </label>
+                        <div class="ganadoPerdido">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="ganado">
+                                <label class="form-check-label">
+                                    Ganado
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="perdido">
+                                <label class="form-check-label">
+                                    Perdido
+                                </label>
+
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="perdido">
-                            <label class="form-check-label">
-                                Perdido
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="empatado">
-                            <label class="form-check-label">
-                                Empatado
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="proximos">
-                            <label class="form-check-label">
-                                Proximos partidos
-                            </label>
+                        <div class="empatadoProximos">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="empatado">
+                                <label class="form-check-label">
+                                    Empatado
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="proximos">
+                                <label class="form-check-label">
+                                    Proximos partidos
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>

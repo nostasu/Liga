@@ -112,25 +112,42 @@ td[colspan^="7"]{
         display:none;  
     } 
 
-    .tableClasificacion th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),
-    th:nth-child(7), th:nth-child(8), th:nth-child(9){
+    .container #opcionesSeleccion{
+        flex-direction: column;
+        margin: 4px;
+    }
+
+    
+    .submitReset #button{
+        margin: 10px;
+    }
+
+    .submitReset #reiniciar{
+        margin: 10px;
+    }
+
+    #consultarOpcion{
+        gap: 0px 10px;
+    }
+
+    .ganadoPerdido{
+        justify-content: flex-start;
+    }
+
+    .empatadoProximos{
+        justify-content: flex-end;
+    }
+
+    .tableClasificacion :is(th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),
+    th:nth-child(7), th:nth-child(8), th:nth-child(9)){
         display: none;
     }
  
-
-    .tableClasificacion th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),
-    th:nth-child(7), th:nth-child(8), th:nth-child(9){
-        display: none;
-    }
  
-    .tableClasificacion td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9), td:nth-child(10) {
-        
-        display: none;
-    }
-
-    .tableClasificacion td:nth-child(4){
+    .tableClasificacion td:not(td:nth-child(1), td:nth-child(2), td:nth-child(10)) {
         display:none;
     }
+
 
     .d-flex{
         flex-wrap: wrap;
