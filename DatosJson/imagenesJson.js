@@ -1,8 +1,6 @@
 let api = "cfba544d51b440e59acb0d0eb9572159";
 let urlImagenes = "https://api.football-data.org/v2/competitions/2014/teams";
 
-//El fetch necesita un input que es la informacion (url) + init que es 
-//un objeto de opciones, donde vamos a poner nuestro header (API KEY)
 fetch(urlImagenes, {
     method: "GET",
     headers: {
@@ -10,21 +8,20 @@ fetch(urlImagenes, {
     }
 })
     .then(function (response) {
-        if (response.ok) { //si es true se mete.
+        if (response.ok) {
             console.log(response);
-            return response.json();  //esto nos devuelve otra promesa, hay que hacer otro then
+            return response.json();
 
         }
         throw newError("Fallo");
     })
 
     .then(function (dataImagenes) {
-        console.log(dataImagenes); //Aqui ya nos da los partidos!!
+        console.log(dataImagenes);
         init(dataImagenes);
     })
     .catch(function (error) {
         console.error(error);
-        //AQui podemos poner codigo bootstrap para errores.
     });
 
 function init(dataImagenes) {

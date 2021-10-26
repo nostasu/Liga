@@ -1,7 +1,4 @@
-//Tenemos que conseguir hacer un array de estadisticas:
-// est = [0]{ id, name, goals, matches, avg, golesContra}
-
-//Tenemos que recorrer datosPartidos que es donde esta toda la info.
+//est = [0]{id, name, goals, matches, avg, golesContra}
 
 function crearArray(datosPartidos) {
     let arrayEquipos = [];
@@ -135,16 +132,15 @@ function crearCards(array, param) {
     }
 }
 
-//Ordenar segun parametro (o bien avg, o bien goles/Contra). b siempre es el primer elemento que queremos comparar
-//primero Valencia, luego Getafe...
+//Ordenar segun parametro (o bien avg, o bien goles/Contra).
 function ordenar(array, param) {
 
     array.sort((a, b) => {
         if (a[param] < b[param]) {
-            return 1;  //Es cuando lo queremos cambiar.
+            return 1;
         }
         if (a[param] > b[param]) {
-            return -1;  //Lo dejamos igual.
+            return -1;
         }
         return 0;
     });

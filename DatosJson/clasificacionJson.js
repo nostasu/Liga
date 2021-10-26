@@ -10,8 +10,8 @@ fetch(urlClasificacion, {
     }
 })
     .then(function (response) {
-        if (response.ok) { //si es true se mete.
-            return response.json();  //esto nos devuelve otra promesa, hay que hacer otro then
+        if (response.ok) {
+            return response.json();
         }
 
         throw newError("Fallo");
@@ -23,7 +23,6 @@ fetch(urlClasificacion, {
     })
     .catch(function (error) {
         console.error(error);
-        //AQui podemos poner codigo bootstrap para errores.
     });
 
 function init(dataClasificacion) {

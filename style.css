@@ -97,6 +97,22 @@ td[colspan^="7"]{
     width: 10em;
 }
 
+#consultarOpcion{
+    justify-content: center;
+    gap: 0px 30px;
+}
+
+.ganadoPerdido{
+    display:flex;
+    gap: 0px 30px;
+
+}
+.empatadoProximos{
+    display:flex;
+    gap: 0px 30px;
+    justify-content: flex-end;
+}
+
 @media screen and (max-width: 605px) {
 
     .container {
@@ -128,14 +144,17 @@ td[colspan^="7"]{
 
     #consultarOpcion{
         gap: 0px 10px;
+        justify-content: space-around;
     }
 
     .ganadoPerdido{
         justify-content: flex-start;
+        flex-direction: column;
     }
 
     .empatadoProximos{
         justify-content: flex-end;
+        flex-direction: column;
     }
 
     .tableClasificacion :is(th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),

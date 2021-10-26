@@ -1,4 +1,3 @@
-
 function crearSlider(teams) {
 
     let acordeon = document.getElementById("accordionExample");
@@ -11,11 +10,10 @@ function crearSlider(teams) {
         titulo.setAttribute("id", `heading${[i]}`);
         let boton = document.createElement("button");
         boton.classList.add("accordion-button");
-        // boton.classList.add("collapse");
         boton.setAttribute("type", "button");
         boton.setAttribute("data-bs-toggle", "collapse");
         boton.setAttribute("data-bs-target", `#collapse${[i]}`);
-        if (i == 0) {  //Solo para el primer elemento, dejamelo expandido inicialmente
+        if (i == 0) {
             boton.setAttribute("aria-expanded", "true");
         } else {
             boton.setAttribute("aria-expanded", "false");
@@ -28,22 +26,20 @@ function crearSlider(teams) {
         cuerpo.classList.add("accordion-collapse");
         cuerpo.classList.add("collapse");
         if (i == 0) {
-            cuerpo.classList.add("show"); //El primer elemento quiero que lo muestres de inicio.
+            cuerpo.classList.add("show");
         }
         cuerpo.setAttribute("aria-labelledby", `heading${[i]}`);
-        cuerpo.setAttribute("data-bs-parent", "#accordionExample"); //Muy importante para que se cierren todos!
+        cuerpo.setAttribute("data-bs-parent", "#accordionExample");
         let imagen = document.createElement("div");
         imagen.classList.add("accordion-body");
         let a = `<a href="${teams[i].website}"> <img src="${teams[i].crestUrl}"/></a>`;
         imagen.innerHTML = a;
-
 
         acordeon.appendChild(itemAcordeon);
         itemAcordeon.appendChild(titulo);
         titulo.appendChild(boton);
         itemAcordeon.appendChild(cuerpo);
         cuerpo.appendChild(imagen);
-
     }
 }
 
