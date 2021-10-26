@@ -101,28 +101,36 @@ td[colspan^="7"]{
 
     .container {
         width:100%;
-        padding: 0;
+        padding: 0px;
     }
 
-    .tablePartidos thead th:nth-child(4), th:nth-child(5){
+    .tablePartidos th:nth-child(4), .tablePartidos th:nth-child(5){
         display:none;
     }    
 
-    .tablePartidos tbody td:nth-child(6), td:nth-child(7){
+    .tablePartidos td:nth-child(6), .tablePartidos td:nth-child(7){
         display:none;  
     } 
 
-
-    .tableClasificacion thead th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),
+    .tableClasificacion th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),
     th:nth-child(7), th:nth-child(8), th:nth-child(9){
         display: none;
     }
  
-     .tableClasificacion tbody td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9){
+
+    .tableClasificacion th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6),
+    th:nth-child(7), th:nth-child(8), th:nth-child(9){
+        display: none;
+    }
+ 
+    .tableClasificacion td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9), td:nth-child(10) {
         
         display: none;
     }
 
+    .tableClasificacion td:nth-child(4){
+        display:none;
+    }
 
     .d-flex{
         flex-wrap: wrap;
