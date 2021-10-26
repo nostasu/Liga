@@ -31,13 +31,14 @@ a{
     font-style: oblique;
 }
 
-thead th:nth-child(2){
+thead, th:nth-child(2){
     text-align: center;
+    vertical-align: middle;
 } 
 
 .tablePartidos, thead{
     text-align:center;
-    vertical-align: top;
+    vertical-align:middle;
 }
 
 
@@ -117,10 +118,11 @@ td[colspan^="7"]{
         display: none;
     }
  
-    .tableClasificacion tbody td:nth-child(4) td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9), td:nth-child(10) {
+     .tableClasificacion tbody td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9){
         
         display: none;
     }
+
 
     .d-flex{
         flex-wrap: wrap;
