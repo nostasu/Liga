@@ -17,8 +17,7 @@ function activarBoton(data) {
 }
 
 /*
-Funcion para crear la tabla dependiendo del array que le pasemos.
-Le pasamos el array de todos los partidos o bien el array filtrado.
+Funcion para crear la tabla dependiendo del array que le pasemos (todos partidos o filtrado por equipo y opción).
 */
 function crearTabla(data) {
     let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, fechaCompleta, imgLocal, imgVisitante;

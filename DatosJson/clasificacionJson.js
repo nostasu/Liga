@@ -13,7 +13,6 @@ fetch(urlClasificacion, {
         if (response.ok) {
             return response.json();
         }
-
         throw newError("Fallo");
     })
 

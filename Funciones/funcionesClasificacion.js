@@ -1,7 +1,9 @@
 let tbody = document.getElementById("tbodyC");
 
-/*Crea la tabla. Conseguimos los datos para cada indice del arrayCol (posición, equipo…). 
-Luego recorremos el arrayCol para crear las td e introducir en cada td el contenido.*/
+/*
+Crea la tabla. Conseguimos los datos para cada indice del arrayCol (posición, equipo…). 
+Luego recorremos el arrayCol para crear las td e introducir en cada td el contenido.
+*/
 
 function crearTablaClasificacion(datosClasificacion) {
     let row, posicion, equipo, PJ, V, E, D, GF, GC, DG, pts;

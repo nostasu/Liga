@@ -1,6 +1,8 @@
 # Página de la Liga 
-## Proyecto 2 Let's Coder
+# Ejemplo de uso:
+https://laughing-spence-cb459b.netlify.app/
 
+## Proyecto 2 Let's Coder
 En este proyecto se intenta recrear la página web de la liga de futbol, con su clasificacion, sus partidos, algunas estadísticas de interés y añadiendo además filtros por partidos para poder ver de un determinado equipo los partidos que ha ganado, perdido, empatado o sus próximos partidos.  Se utiliza bootstrap, html, javascript y un poquito de css para los detalles de estilo propios. 
 
 El proyecto se divide en 4 páginas html que se describen a continuación. Todas ellas tienen una navbar creada con Bootstrap.
@@ -14,13 +16,13 @@ Nada mas abrir la página web, se muestran todos los partidos de la temporada, j
 ## Crear Tabla
 Recibe por parámetro un array (o bien el de todos los partidos, o los partidos filtrados por equipo y opción) esta función va creando dinámicamente la tabla. Llama también a las funciones cambiarFinalizado y eliminarNull para ayudar a mostrar la tabla correctamente en pantalla con valores perfectamente entendibles por cualquier usuario.
 
-##CrearArrayPequeño.
+## CrearArrayPequeño.
 Esta función crea un array ayudándose de map y set que contiene los valores únicos de los 20 equipos. Cuando lo tiene creado, llama a crearOpcionesSelect() que nos rellena dinámicamente el select de los 20 equipos.
 
-##ActivarBoton.
+## ActivarBoton.
 Si se produce el evento, significa que le queremos pasar filtros a la tabla de partidos.  Primero de todo, obtenemos el nombre del equipo que el usuario ha marcado con el select, y también obtenemos la opción marcada de los radios. Con estos datos, llamamos a crearArrayPorEquipo con el equipo seleccionado y la opción. 
 
-##Crear array por equipo.
+## Crear array por equipo.
 Esta es la función que crea el array con los filtros y el equipo seleccionados. Esta funcion llama a filtros, mostrar alerta, y a crear tabla con los datos ya filtrados.
 La función inicia creando un array de los partidos del equipoSeleccionado, y este array se pasa a la función filtros que vuelve a filtrar el array según la opción que el usuario haya escogido. También llama a  mostrar alerta para informar al usuario de posibles “errores” como que no haya partidos empatados para algún equipo determinado o por ejemplo el error de que no se seleccione el equipo.
 # Página Clasificación.
@@ -43,5 +45,3 @@ A esta función le pasamos dos parámetros, el array del cual queremos mostrar l
 ## Ordenar. 
 Nos aprovechamos de la método sort para ordenar el array. O bien por avg o por goles en contra.
 
-# Ejemplo de uso:
-https://laughing-spence-cb459b.netlify.app/clasificacion.html

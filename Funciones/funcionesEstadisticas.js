@@ -9,7 +9,6 @@ function crearArray(datosPartidos) {
         let status = datosPartidos[i].status;
 
         let equipo = comprobarSiExiste(arrayEquipos, idLocal, status);
-        //El equipo todavia no esta en el array, lo creamos.
         if (equipo === undefined) {
             let equipoLocal = {
                 id: idLocal,
@@ -21,7 +20,6 @@ function crearArray(datosPartidos) {
             };
             arrayEquipos.push(equipoLocal);
         } else {
-            //Lo ha encontrado, y nos devuelve el equipo.
             if (equipo !== null) {
                 equipo.matches += 1;
                 equipo.goals += datosPartidos[i].score.fullTime.homeTeam;
@@ -40,7 +38,6 @@ function crearArray(datosPartidos) {
             };
             arrayEquipos.push(equipoVisitante);
         } else {
-            //Lo ha encontrado, por tanto modificamos sus valores.
             if (equipoV !== null) {
                 equipoV.matches += 1;
                 equipoV.golesContraVisitante += datosPartidos[i].score.fullTime.homeTeam;
@@ -50,7 +47,7 @@ function crearArray(datosPartidos) {
     }
     modificarGolesAvg(arrayEquipos);
     crearCards(arrayEquipos, "avg");
-    crearCards(arrayEquipos, "golesContra");
+    crearCards(arrayEquipos, "golesContraVisitante");
 }
 
 //Lo único que hace es sacar la media del avg
@@ -60,10 +57,7 @@ function modificarGolesAvg(arrayEquipos) {
     }
 }
 
-//Find. Si el partido no esta finalizado, ni lo miramos (no hay que actualizar
-//ni el valor de matches, ni el de goles).
-//Si existe y esta finalizado., pasar el objeto.
-// Si no existe, devolver para crearlo.
+//Find. Si el partido no esta finalizado, ni lo miramos (no hay que actualizar nada). Si existe y esta finalizado, pasar el objeto. Si no existe, devolver para crearlo.
 function comprobarSiExiste(array, id, status) {
 
     let equipo = array.find(equipo => equipo.id === id);
@@ -78,16 +72,15 @@ function comprobarSiExiste(array, id, status) {
     return equipo;
 }
 
-//funcion para crear las cards, hacemos copia del array, lo ordenamos,
-//y creamos las tarjetas dinamicamente.
+//Funcion para crear las cards, hacemos copia del array, lo ordenamos, y creamos "cards"
 function crearCards(array, param) {
     let arrayParam = Array.from(array);
     ordenar(arrayParam, param);
 
-    if (param == "golesContra") {
+    if (param == "golesContraVisitante") {
         arrayParam.reverse();
     }
-
+    console.log(arrayParam);
     let array5 = arrayParam.slice(0, 5);
     let contenedorCards = document.getElementById("containerEstadisticas");
     let titulo = document.createElement("h1");
@@ -95,7 +88,7 @@ function crearCards(array, param) {
 
     if (param == "avg") {
         titulo.innerHTML = "Equipos con mejor media de goles por partido";
-    } else if (param == "golesContra") {
+    } else if (param == "golesContraVisitante") {
         titulo.innerHTML = "Equipos con menos goles en contra fuera de casa";
     }
 
@@ -123,7 +116,7 @@ function crearCards(array, param) {
         texto.classList.add("card-text");
         if (param == "avg") {
             texto.innerHTML = `Con un AVG de ${array5[i].avg} goles`;
-        } else if (param == "golesContra") {
+        } else if (param == "golesContraVisitante") {
             texto.innerHTML = `Con un total de ${array5[i].golesContraVisitante} goles en contra fuera de casa`;
         }
 
@@ -134,7 +127,7 @@ function crearCards(array, param) {
 
 //Ordenar segun parametro (o bien avg, o bien goles/Contra).
 function ordenar(array, param) {
-
+    console.log(array);
     array.sort((a, b) => {
         if (a[param] < b[param]) {
             return 1;
@@ -144,4 +137,5 @@ function ordenar(array, param) {
         }
         return 0;
     });
+    console.log(array);
 }

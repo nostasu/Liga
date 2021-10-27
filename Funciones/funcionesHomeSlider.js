@@ -1,8 +1,11 @@
+/*
+*En teams ya nos pasa los 20 equipos, con esta funcion creamos el accordion que nos muestra los equipos.
+*/
 function crearSlider(teams) {
 
     let acordeon = document.getElementById("accordionExample");
     for (let i = 0; i < teams.length; i++) {
-        let itemAcordeon = document.createElement("div");  //Así creamos los 20 divs
+        let itemAcordeon = document.createElement("div");
         itemAcordeon.classList.add("accordion-item");
 
         let titulo = document.createElement("h2");
