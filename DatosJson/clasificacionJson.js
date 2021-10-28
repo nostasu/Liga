@@ -1,8 +1,6 @@
 let api = "cfba544d51b440e59acb0d0eb9572159";
 let urlClasificacion = "https://api.football-data.org/v2/competitions/2014/standings";
 
-//El fetch necesita un input que es la informacion (url) + init que es 
-//un objeto de opciones, donde vamos a poner nuestro header (API KEY)
 fetch(urlClasificacion, {
     method: "GET",
     headers: {

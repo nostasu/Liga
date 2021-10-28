@@ -58,9 +58,9 @@ function modificarGolesAvg(arrayEquipos) {
 }
 
 //Find. Si el partido no esta finalizado, ni lo miramos (no hay que actualizar nada). Si existe y esta finalizado, pasar el objeto. Si no existe, devolver para crearlo.
-function comprobarSiExiste(array, id, status) {
+function comprobarSiExiste(arrayBusqueda, id, status) {
 
-    let equipo = array.find(equipo => equipo.id === id);
+    let equipo = arrayBusqueda.find(equipo => equipo.id === id);
 
     if (equipo !== undefined) {
         if (status == "FINISHED") {
@@ -74,14 +74,14 @@ function comprobarSiExiste(array, id, status) {
 
 //Funcion para crear las cards, hacemos copia del array, lo ordenamos, y creamos "cards"
 function crearCards(array, param) {
-    let arrayParam = Array.from(array);
-    ordenar(arrayParam, param);
+    let arrayFiltradoParam = Array.from(array);
+    ordenar(arrayFiltradoParam, param);
 
     if (param == "golesContraVisitante") {
-        arrayParam.reverse();
+        arrayFiltradoParam.reverse();
     }
-    console.log(arrayParam);
-    let array5 = arrayParam.slice(0, 5);
+    console.log(arrayFiltradoParam);
+    let array5 = arrayFiltradoParam.slice(0, 5);
     let contenedorCards = document.getElementById("containerEstadisticas");
     let titulo = document.createElement("h1");
     contenedorCards.appendChild(titulo);

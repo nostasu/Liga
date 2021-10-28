@@ -1,7 +1,7 @@
 let api = "cfba544d51b440e59acb0d0eb9572159";
-let urlImagenes = "https://api.football-data.org/v2/competitions/2014/teams";
+let urlTeams = "https://api.football-data.org/v2/competitions/2014/teams";
 
-fetch(urlImagenes, {
+fetch(urlTeams, {
     method: "GET",
     headers: {
         "X-Auth-Token": api

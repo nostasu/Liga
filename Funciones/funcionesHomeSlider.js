@@ -1,10 +1,10 @@
 /*
 *En teams ya nos pasa los 20 equipos, con esta funcion creamos el accordion que nos muestra los equipos.
 */
-function crearSlider(teams) {
+function crearSlider(dataTeams) {
 
     let acordeon = document.getElementById("accordionExample");
-    for (let i = 0; i < teams.length; i++) {
+    for (let i = 0; i < dataTeams.length; i++) {
         let itemAcordeon = document.createElement("div");
         itemAcordeon.classList.add("accordion-item");
 
@@ -22,7 +22,7 @@ function crearSlider(teams) {
             boton.setAttribute("aria-expanded", "false");
         }
         boton.setAttribute("aria-controls", `collapse${[i]}`);
-        boton.innerHTML = teams[i].name;
+        boton.innerHTML = dataTeams[i].name;
 
         let cuerpo = document.createElement("div");
         cuerpo.setAttribute("id", `collapse${[i]}`);
@@ -35,7 +35,7 @@ function crearSlider(teams) {
         cuerpo.setAttribute("data-bs-parent", "#accordionExample");
         let imagen = document.createElement("div");
         imagen.classList.add("accordion-body");
-        let a = `<a href="${teams[i].website}"> <img src="${teams[i].crestUrl}"/></a>`;
+        let a = `<a href="${dataTeams[i].website}"> <img src="${dataTeams[i].crestUrl}"/></a>`;
         imagen.innerHTML = a;
 
         acordeon.appendChild(itemAcordeon);

@@ -1,7 +1,7 @@
 let tbody = document.getElementById("tbodyP");
 
 // Con submit, llamamos a eta funcion para seleccionar por equipo y modalidad (ganados, perdidos..).
-function activarBoton(data) {
+function activarBoton(dataPartidos) {
     let elementosSelect = document.getElementById("elegirEquipo");
     let indiceSeleccionado = elementosSelect.selectedIndex;
     let equipoSeleccionado = elementosSelect[indiceSeleccionado].text;
@@ -13,52 +13,52 @@ function activarBoton(data) {
             opcion = opciones[i].id;
         }
     }
-    crearArrayPorEquipo(equipoSeleccionado, opcion, data);
+    crearArrayPorEquipo(equipoSeleccionado, opcion, dataPartidos);
 }
 
 /*
 Funcion para crear la tabla dependiendo del array que le pasemos (todos partidos o filtrado por equipo y opción).
 */
-function crearTabla(data) {
+function crearTabla(dataPartidos) {
     let equipoLocal, resultado, resultadoProvisional, equipoVisitante, fecha, finalizado, fechaCompleta, imgLocal, imgVisitante;
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < dataPartidos.length; i++) {
         let row1 = document.createElement("tr");
         tbody.appendChild(row1);
         if (i == 0) {
             let celdaJornada = document.createElement("td");
             celdaJornada.setAttribute("colspan", "7");
-            celdaJornada.innerHTML = `Jornada ${data[i].matchday}`
+            celdaJornada.innerHTML = `Jornada ${dataPartidos[i].matchday}`
             row1.append(celdaJornada);
-        } else if (data[i].matchday != data[i - 1].matchday) {
+        } else if (dataPartidos[i].matchday != dataPartidos[i - 1].matchday) {
             let celdaJornada = document.createElement("td");
             celdaJornada.setAttribute("colspan", "7");
-            celdaJornada.innerHTML = `Jornada ${data[i].matchday}`
+            celdaJornada.innerHTML = `Jornada ${dataPartidos[i].matchday}`
             row1.append(celdaJornada);
         }
 
         let row2 = document.createElement("tr");
         tbody.appendChild(row2);
         equipoLocal = document.createElement("td");
-        equipoLocal.textContent = data[i].homeTeam.name;
+        equipoLocal.textContent = dataPartidos[i].homeTeam.name;
         resultado = document.createElement("td");
-        resultadoProvisional = eliminarNull(`${data[i].score.fullTime.homeTeam} - ${data[i].score.fullTime.awayTeam}`);
+        resultadoProvisional = eliminarNull(`${dataPartidos[i].score.fullTime.homeTeam} - ${dataPartidos[i].score.fullTime.awayTeam}`);
         imgLocal = document.createElement("td");
         imgVisitante = document.createElement("td");
-        imgLocal.innerHTML = `<img src="https://crests.football-data.org/${data[i].homeTeam.id}.svg"/>`
+        imgLocal.innerHTML = `<img src="https://crests.football-data.org/${dataPartidos[i].homeTeam.id}.svg"/>`
         resultado.innerHTML = resultadoProvisional;
-        imgVisitante.innerHTML = `<img src="https://crests.football-data.org/${data[i].awayTeam.id}.svg"/>`
+        imgVisitante.innerHTML = `<img src="https://crests.football-data.org/${dataPartidos[i].awayTeam.id}.svg"/>`
         equipoVisitante = document.createElement("td");
-        equipoVisitante.innerHTML = data[i].awayTeam.name;
+        equipoVisitante.innerHTML = dataPartidos[i].awayTeam.name;
         fecha = document.createElement("td");
-        fechaCompleta = data[i].utcDate;
+        fechaCompleta = dataPartidos[i].utcDate;
         fecha.innerHTML = fechaCompleta.substring(0, 10);
         finalizado = document.createElement("td");
-        finalizado.innerHTML = cambiarFinalizado(data[i].status);
+        finalizado.innerHTML = cambiarFinalizado(dataPartidos[i].status);
 
-        if (data[i].score.fullTime.homeTeam > data[i].score.fullTime.awayTeam) {
+        if (dataPartidos[i].score.fullTime.homeTeam > dataPartidos[i].score.fullTime.awayTeam) {
             equipoLocal.setAttribute("style", "font-weight:bold");
         }
-        else if (data[i].score.fullTime.awayTeam > data[i].score.fullTime.homeTeam) {
+        else if (dataPartidos[i].score.fullTime.awayTeam > dataPartidos[i].score.fullTime.homeTeam) {
             equipoVisitante.setAttribute("style", "font-weight:bold");
         }
         row2.append(equipoLocal, imgLocal, resultado, imgVisitante, equipoVisitante, fecha, finalizado);
@@ -91,9 +91,9 @@ function eliminarNull(cadena) {
 }
 
 //Se crea un array solo con los nommbres de los equipos para imprimirlos.
-function crearArrayPequeño(data) {
+function crearArrayPequeño(dataPartidos) {
 
-    let nombres = data.map(partido => {
+    let nombres = dataPartidos.map(partido => {
         return partido.homeTeam.name;
     });
 
